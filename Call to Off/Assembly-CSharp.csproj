@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Intro.cs" />
     <Compile Include="Assets\Scripts\TMP_TypeByAnimationLength.cs" />
+    <Compile Include="Assets\Scripts\CameraShaking.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
