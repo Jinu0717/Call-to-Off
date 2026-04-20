@@ -5,6 +5,16 @@ using UnityEngine;
 public class Intro : MonoBehaviour
 {
     [SerializeField]
+    private GameObject hand;
+    [SerializeField]
+    private GameObject ARSText;
+    [SerializeField]
+    private GameObject[] canvases;
+    [SerializeField]
+    private SpriteRenderer phoneSR;
+    [SerializeField]
+    private Sprite numberSprite;
+    [SerializeField]
     private RectTransform barWidth;
     [SerializeField]
     private Animator playerAnim;
@@ -19,7 +29,7 @@ public class Intro : MonoBehaviour
     [SerializeField]
     [TextArea(2, 5)]
     private string[] dialogues;
-    [SerializeField] 
+    [SerializeField]
     private CameraShaking camShake;
     [SerializeField]
     private SpriteRenderer playerSR;
@@ -28,7 +38,20 @@ public class Intro : MonoBehaviour
     private int currentIndex = 1;
     private bool isEnd = false;
     private Coroutine playerMotionCheckRoutine;
-    
+
+    private void Awake()
+    {
+        hand.SetActive(false);
+        ARSText.SetActive(false);
+
+        canvases[0].SetActive(true);
+        canvases[1].SetActive(false);
+
+        cellPhoneAnim.enabled = false;
+
+        isEnd = false;
+    }
+
     private void Start()
     {
         if (dialogues == null || dialogues.Length == 0)
@@ -38,6 +61,7 @@ public class Intro : MonoBehaviour
             return;
         }
 
+        typeWriter.StopTypingRoutineOnly();
         typeWriter.Play(dialogues[0]);
         UpdateBarWidth();
         ApplyPeopleSprite(false);
@@ -51,11 +75,9 @@ public class Intro : MonoBehaviour
         if (isEnd)
             return;
 
-        if (typeWriter.IsTyping)
-        {
-            typeWriter.Skip();
+        // 출력 코루틴 진행 중이면 입력 무시
+        if (typeWriter != null && typeWriter.IsTyping)
             return;
-        }
 
         ShowNextDialogue();
     }
@@ -76,6 +98,9 @@ public class Intro : MonoBehaviour
             FinishIntro();
             return;
         }
+
+        if (typeWriter != null)
+            typeWriter.StopTypingRoutineOnly();
 
         HandleCellPhoneEventByIndex(currentIndex);
         UpdateBarWidth();
@@ -110,8 +135,19 @@ public class Intro : MonoBehaviour
 
     private void FinishIntro()
     {
+        if (typeWriter != null)
+            typeWriter.StopTypingRoutineOnly();
+
         if (cellPhoneAnim != null && cellPhoneAnim.enabled)
             cellPhoneAnim.SetTrigger("Click");
+
+        canvases[0].SetActive(false);
+        canvases[1].SetActive(true);
+
+        phoneSR.sprite = numberSprite;
+
+        hand.SetActive(true);
+        ARSText.SetActive(true);
 
         isEnd = true;
         typeWriter.Play("");
@@ -140,7 +176,6 @@ public class Intro : MonoBehaviour
             bool wasSit = prevName == TARGET_SPRITE_NAME;
             bool isSit = currentName == TARGET_SPRITE_NAME;
 
-            // ⭐ Sit4로 "처음 들어간 순간만"
             if (!wasSit && isSit)
             {
                 ApplyPeopleSprite(true);
@@ -153,7 +188,6 @@ public class Intro : MonoBehaviour
             }
 
             prevName = currentName;
-
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -166,7 +200,6 @@ public class Intro : MonoBehaviour
     {
         if (peaple == null || peaple.Length == 0)
             return;
-
         if (personSprite == null || personSprite.Length < 2)
             return;
 

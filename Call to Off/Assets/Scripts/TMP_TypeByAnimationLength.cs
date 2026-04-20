@@ -5,18 +5,26 @@ using UnityEngine;
 
 public class TMP_TypeByAnimationLength : MonoBehaviour
 {
-    [SerializeField] 
-    private TMP_Text targetText;
+    public enum TypingMode
+    {
+        UseAnimationLength,
+        UseFixedCharacterTime
+    }
+
+    [SerializeField] private TMP_Text targetText;
 
     [Header("Animator 연결")]
-    [SerializeField] 
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     [Header("출력 옵션")]
-    [SerializeField] private bool useUnscaledTime = false;
+    [SerializeField] private TypingMode typingMode = TypingMode.UseAnimationLength;
+
+    [Tooltip("UseFixedCharacterTime일 때 완성 글자 1개당 걸리는 시간")]
+    [SerializeField] private float timePerCharacter = 0.1f;
 
     public bool IsTyping { get; private set; }
     public bool IsFinished { get; private set; }
+    public TypingMode CurrentMode => typingMode;
 
     private string currentFullText = "";
     private Coroutine typingCoroutine;
@@ -33,7 +41,33 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
     private const int T_COUNT = 28;
     private const int N_COUNT = V_COUNT * T_COUNT;
 
-    private void Reset() { targetText = GetComponent<TMP_Text>(); }
+    private void Reset()
+    {
+        targetText = GetComponent<TMP_Text>();
+    }
+
+    public void StopTypingRoutineOnly()
+    {
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+        }
+
+        IsTyping = false;
+    }
+
+    public void ClearText()
+    {
+        StopTypingRoutineOnly();
+
+        currentFullText = "";
+
+        if (targetText != null)
+            targetText.text = "";
+
+        IsFinished = false;
+    }
 
     public void Play(string text)
     {
@@ -43,44 +77,10 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
             return;
         }
 
+        StopTypingRoutineOnly();
+
         currentFullText = text ?? "";
-
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-            typingCoroutine = null;
-        }
-
         typingCoroutine = StartCoroutine(TypeRoutine(currentFullText));
-    }
-
-    public void Skip()
-    {
-        if (!IsTyping) { return; }
-
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-            typingCoroutine = null;
-        }
-
-        targetText.text = currentFullText;
-        IsTyping = false;
-        IsFinished = true;
-    }
-
-    public void ClearText()
-    {
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-            typingCoroutine = null;
-        }
-
-        targetText.text = "";
-        currentFullText = "";
-        IsTyping = false;
-        IsFinished = false;
     }
 
     private IEnumerator TypeRoutine(string text)
@@ -91,9 +91,7 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
 
         yield return null;
 
-        List<string> frames = BuildTypingFrames(text);
-
-        if (frames.Count == 0)
+        if (string.IsNullOrEmpty(text))
         {
             targetText.text = text;
             IsTyping = false;
@@ -102,14 +100,29 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
             yield break;
         }
 
+        if (typingMode == TypingMode.UseAnimationLength)
+            yield return StartCoroutine(TypeByAnimationLength(text));
+        else
+            yield return StartCoroutine(TypeByFixedCharacterTime(text));
+
+        targetText.text = text;
+        IsTyping = false;
+        IsFinished = true;
+        typingCoroutine = null;
+    }
+
+    private IEnumerator TypeByAnimationLength(string text)
+    {
+        List<string> frames = BuildTypingFrames(text);
+
+        if (frames.Count == 0)
+            yield break;
+
         float animLength = GetAnimationLength();
 
         if (animLength <= 0f)
         {
             targetText.text = text;
-            IsTyping = false;
-            IsFinished = true;
-            typingCoroutine = null;
             yield break;
         }
 
@@ -120,21 +133,45 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
             targetText.text = frames[i];
 
             if (i < frames.Count - 1)
-            {
-                if (useUnscaledTime) { yield return new WaitForSecondsRealtime(stepTime); }
-                else { yield return new WaitForSeconds(stepTime); }
-            }
+                yield return new WaitForSeconds(stepTime);
         }
+    }
 
-        targetText.text = text;
-        IsTyping = false;
-        IsFinished = true;
-        typingCoroutine = null;
+    private IEnumerator TypeByFixedCharacterTime(string text)
+    {
+        string fixedPart = "";
+
+        foreach (char c in text)
+        {
+            List<string> steps = GetCharacterSteps(c);
+
+            if (steps == null || steps.Count == 0)
+            {
+                fixedPart += c;
+                targetText.text = fixedPart;
+                continue;
+            }
+
+            float totalCharTime = Mathf.Max(0f, timePerCharacter);
+            float stepTime = totalCharTime / steps.Count;
+
+            for (int i = 0; i < steps.Count; i++)
+            {
+                targetText.text = fixedPart + steps[i];
+
+                if (i < steps.Count - 1)
+                    yield return new WaitForSeconds(stepTime);
+            }
+
+            fixedPart += c;
+            yield return new WaitForSeconds(stepTime);
+        }
     }
 
     private float GetAnimationLength()
     {
-        if (animator == null) { return 0f; }
+        if (animator == null)
+            return 0f;
 
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         return stateInfo.length;
@@ -149,7 +186,8 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
         {
             List<string> steps = GetCharacterSteps(c);
 
-            for (int i = 0; i < steps.Count; i++) { frames.Add(fixedPart + steps[i]); }
+            for (int i = 0; i < steps.Count; i++)
+                frames.Add(fixedPart + steps[i]);
 
             fixedPart += c;
         }
@@ -176,7 +214,8 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
             char lvChar = ComposeLV(lIndex, vIndex);
             steps.Add(lvChar.ToString());
 
-            if (tIndex > 0) { steps.Add(c.ToString()); }
+            if (tIndex > 0)
+                steps.Add(c.ToString());
 
             return steps;
         }
@@ -185,7 +224,10 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
         return steps;
     }
 
-    private bool IsHangulSyllable(char c) { return c >= HANGUL_BASE && c <= HANGUL_LAST; }
+    private bool IsHangulSyllable(char c)
+    {
+        return c >= HANGUL_BASE && c <= HANGUL_LAST;
+    }
 
     private void DecomposeHangul(char syllable, out int lIndex, out int vIndex, out int tIndex)
     {
