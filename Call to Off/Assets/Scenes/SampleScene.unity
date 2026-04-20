@@ -849,6 +849,9 @@ MonoBehaviour:
   startNodeId: 0
   typeWriter: {fileID: 1399980566}
   inputPreviewText: {fileID: 0}
+  useDebugLog: 1
+  upperMenuGuide: "\uC0C1\uC704\uB85C \uC62C\uB77C\uAC00\uACE0 \uC2F6\uB2E4\uBA74
+    0\uBC88\uC744 \uB20C\uB7EC\uC8FC\uC138\uC694."
 --- !u!1 &289664052
 GameObject:
   m_ObjectHideFlags: 0

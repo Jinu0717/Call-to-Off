@@ -1,5 +1,9 @@
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class ARSTreeInstaller : MonoBehaviour
 {
     public ARSTreeData treeData;
@@ -17,6 +21,12 @@ public class ARSTreeInstaller : MonoBehaviour
         treeData.nodes = ARSDataFactory.CreateAllNodes();
         treeData.BuildDictionary();
 
-        Debug.Log("전체 ARS 데이터 입력 완료");
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(treeData);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+#endif
+
+        Debug.Log("전체 ARS 데이터 입력 완료 및 저장 완료");
     }
 }

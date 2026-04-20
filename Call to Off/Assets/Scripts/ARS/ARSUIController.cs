@@ -28,7 +28,7 @@ public class ARSUIController : MonoBehaviour
 
     [Header("공통 안내문")]
     [TextArea(2, 3)]
-    [SerializeField] private string upperMenuGuide = "다시 듣고 싶다면 9번, 상위로 올라가고 싶다면 0번을 눌러주세요.";
+    [SerializeField] private string upperMenuGuide = "상위로 올라가고 싶다면 0번을 눌러주세요.";
 
     private ARSNodeData currentNode;
     private string inputBuffer = "";
@@ -124,12 +124,6 @@ public class ARSUIController : MonoBehaviour
         if (num == 0)
         {
             ShowNode(startNodeId);
-            return;
-        }
-
-        if (num == 9)
-        {
-            RefreshUI();
             return;
         }
 
