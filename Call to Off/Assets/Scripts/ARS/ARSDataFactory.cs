@@ -11,7 +11,7 @@ public static class ARSDataFactory
                 nodeId = 0,
                 nodeName = "시작",
                 nodeType = ARSNodeType.NormalMenu,
-                dialogue = "안녕하세요. 스마일 홈 통합 고객지원 ARS입니다. 전화 주셔서 감사합니다.\n요금 문의는 1번, 설치 및 이전 문의는 2번, 가전 원격 제어 및 스마트홈 서비스는 3번, 기타 문의는 4번을 눌러주세요.",
+                dialogue = "안녕하세요. 스마일 홈 통합 고객지원 ARS입니다. 전화 주셔서 감사합니다.\n휴대폰 번호 {PHONE_FULL} 고객님,\n요금 문의는 1번, 설치 및 이전 문의는 2번, 가전 원격 제어 및 스마트홈 서비스는 3번, 기타문의는 4번을 눌러주세요.",
                 choices = new List<ARSChoice>
                 {
                     new ARSChoice { inputKey = "1", choiceText = "요금 문의", nextNodeId = 1 },
@@ -102,12 +102,13 @@ public static class ARSDataFactory
                 nodeId = 3,
                 nodeName = "가전 원격 제어 및 스마트홈 서비스",
                 nodeType = ARSNodeType.NormalMenu,
-                dialogue = "스마트홈 앱 연결 문의는 1번, 해외 체류 중 원격 제어는 2번, 등록된 가전 목록 조회는 3번을 눌러주세요.",
+                dialogue = "스마트홈 앱 연결 문의는 1번, 해외 체류 중 원격 제어는 2번, 등록된 가전 목록 조회는 3번, 기기 코드 안내는 4번을 눌러주세요.",
                 choices = new List<ARSChoice>
                 {
                     new ARSChoice { inputKey = "1", choiceText = "스마트홈 앱 연결 문의", nextNodeId = 31 },
                     new ARSChoice { inputKey = "2", choiceText = "해외 체류 중 원격 제어", nextNodeId = 32 },
                     new ARSChoice { inputKey = "3", choiceText = "등록된 가전 목록 조회", nextNodeId = 33 },
+                    new ARSChoice { inputKey = "4", choiceText = "기기 코드 안내", nextNodeId = 34 },
                 }
             },
 
@@ -136,7 +137,7 @@ public static class ARSDataFactory
                 nodeId = 32,
                 nodeName = "해외 체류 중 원격 제어",
                 nodeType = ARSNodeType.NormalMenu,
-                dialogue = "해외 체류 중 등록된 가전을 제어하시려면 본인 확인 및 원격 제어 승인 절차가 필요합니다.\n계약자 본인 인증을 진행하시려면 1번, 가족 구성원 대리 인증을 진행하시려면 2번을 눌러주세요.",
+                dialogue = "해외 체류 중 등록된 가전을 제어하시려면 본인 확인 절차가 필요합니다.\n계약자 본인 인증을 진행하시려면 1번, 가족 구성원 대리 인증을 진행하시려면 2번을 눌러주세요.",
                 choices = new List<ARSChoice>
                 {
                     new ARSChoice { inputKey = "1", choiceText = "계약자 본인 인증", nextNodeId = 321 },
@@ -149,14 +150,7 @@ public static class ARSDataFactory
                 nodeId = 321,
                 nodeName = "계약자 본인 인증",
                 nodeType = ARSNodeType.NumberInput,
-                dialogue = "가입하신 휴대전화 번호 뒤 네 자리를 입력한 후 우물정자를 눌러주세요.",
-                inputRule = new ARSInputRule
-                {
-                    correctValue = "0687",
-                    successNodeId = 3210,
-                    failNodeId = 3211,
-                    failMessage = "입력하신 번호가 일치하지 않습니다."
-                }
+                dialogue = "휴대폰 번호 뒤 네 자리를 입력한 후 우물정자를 눌러주세요."
             },
 
             new ARSNodeData
@@ -164,92 +158,31 @@ public static class ARSDataFactory
                 nodeId = 3211,
                 nodeName = "본인 인증 실패",
                 nodeType = ARSNodeType.NormalMenu,
-                dialogue = "입력하신 번호가 일치하지 않습니다."
+                dialogue = "입력하신 번호가 일치하지 않습니다. 계약자 본인 확인에 실패했습니다."
             },
 
             new ARSNodeData
             {
                 nodeId = 3210,
-                nodeName = "등록 기기 번호 입력",
+                nodeName = "기기 코드 입력",
                 nodeType = ARSNodeType.NumberInput,
-                dialogue = "등록 기기 번호를 입력한 후 우물정자를 눌러주세요.",
-                inputRule = new ARSInputRule
-                {
-                    correctValue = "4821",
-                    successNodeId = 32102,
-                    failNodeId = 32101,
-                    failMessage = "입력하신 등록 기기 번호가 일치하지 않습니다."
-                }
+                dialogue = "전원을 제어할 가전의 기기 코드 네 자리를 입력한 후 우물정자를 눌러주세요."
             },
 
             new ARSNodeData
             {
-                nodeId = 32101,
-                nodeName = "등록 기기 번호 입력 실패",
+                nodeId = 321012,
+                nodeName = "존재하지 않는 기기 코드",
                 nodeType = ARSNodeType.NormalMenu,
-                dialogue = "입력하신 등록 기기 번호가 올바르지 않습니다."
+                dialogue = "입력하신 기기 코드는 등록된 목록에 없습니다. 기기 코드 안내 메뉴에서 코드를 다시 확인해 주세요."
             },
 
             new ARSNodeData
             {
-                nodeId = 32102,
-                nodeName = "에어컨 기기 번호 입력",
-                nodeType = ARSNodeType.NumberInput,
-                dialogue = "에어컨 기기 번호를 입력한 후 우물정자를 눌러주세요.",
-                inputRule = new ARSInputRule
-                {
-                    correctValue = "2",
-                    successNodeId = 321027,
-                    failNodeId = 321021,
-                    failMessage = "입력하신 에어컨 기기 번호가 올바르지 않습니다."
-                }
-            },
-
-            new ARSNodeData
-            {
-                nodeId = 321021,
-                nodeName = "에어컨 기기 번호 입력 실패",
+                nodeId = 321013,
+                nodeName = "다른 가전의 기기 코드 입력",
                 nodeType = ARSNodeType.NormalMenu,
-                dialogue = "입력하신 에어컨 기기 번호가 올바르지 않습니다."
-            },
-
-            new ARSNodeData
-            {
-                nodeId = 321027,
-                nodeName = "에어컨 상세 코드 입력",
-                nodeType = ARSNodeType.NumberInput,
-                dialogue = "에어컨 상세 코드를 입력한 후 우물정자를 눌러주세요.",
-                inputRule = new ARSInputRule
-                {
-                    correctValue = "7",
-                    successNodeId = 32107,
-                    failNodeId = 32103,
-                    failMessage = "입력하신 상세 코드가 올바르지 않습니다."
-                }
-            },
-
-            new ARSNodeData
-            {
-                nodeId = 32103,
-                nodeName = "에어컨 상세 코드 입력 실패",
-                nodeType = ARSNodeType.NormalMenu,
-                dialogue = "입력하신 상세 코드가 올바르지 않습니다."
-            },
-
-            new ARSNodeData
-            {
-                nodeId = 32104,
-                nodeName = "에어컨 기기 정보 없음",
-                nodeType = ARSNodeType.NormalMenu,
-                dialogue = "현재 확인된 거주지 정보에는 등록된 에어컨 설치 내역이 없습니다.\n먼저 등록된 가전 목록 조회에서 거주지 정보를 다시 확인해 주세요."
-            },
-
-            new ARSNodeData
-            {
-                nodeId = 32105,
-                nodeName = "에어컨 상세 코드 정보 없음",
-                nodeType = ARSNodeType.NormalMenu,
-                dialogue = "현재 확인된 거주지 정보에는 등록된 에어컨 상세 코드가 없습니다.\n먼저 등록된 가전 목록 조회에서 아파트 항목과 기기 안내를 확인해 주세요."
+                dialogue = "입력하신 기기 코드는 등록된 기기 코드이지만 거실 스탠드형 에어컨의 코드가 아닙니다. 다른 가전의 기기 코드가 입력된 것으로 보입니다."
             },
 
             new ARSNodeData
@@ -321,7 +254,7 @@ public static class ARSDataFactory
                 nodeId = 331,
                 nodeName = "아파트",
                 nodeType = ARSNodeType.NormalMenu,
-                dialogue = "등록된 기기 목록을 안내해 드립니다. 등록 기기 번호는 4821이며, 에어컨 기기 번호는 2번입니다.\n기기별 상세 코드 안내를 원하시면 9번을 눌러주세요.",
+                dialogue = "등록된 기기 목록을 안내해 드립니다. 거실 조명은 {LIGHT_DEVICE_NO}번, 거실 스탠드형 에어컨은 {AIRCON_DEVICE_NO}번, 로봇 청소기는 {ROBOT_DEVICE_NO}번, 공기청정기는 {PURIFIER_DEVICE_NO}번입니다.\n기기 상세 코드 안내를 원하시면 9번을 눌러주세요.",
                 choices = new List<ARSChoice>
                 {
                     new ARSChoice { inputKey = "9", choiceText = "상세 코드 안내", nextNodeId = 3319 },
@@ -333,7 +266,7 @@ public static class ARSDataFactory
                 nodeId = 3319,
                 nodeName = "상세 코드 안내",
                 nodeType = ARSNodeType.NormalMenu,
-                dialogue = "기기 상세 코드 안내입니다. 에어컨 상세 코드는 7번입니다."
+                dialogue = "기기 상세 코드 안내입니다. 거실 조명은 {LIGHT_DETAIL_CODE}번, 거실 스탠드형 에어컨은 {AIRCON_DETAIL_CODE}번, 로봇 청소기는 {ROBOT_DETAIL_CODE}번, 공기청정기는 {PURIFIER_DETAIL_CODE}번입니다."
             },
 
             new ARSNodeData
@@ -341,7 +274,7 @@ public static class ARSDataFactory
                 nodeId = 332,
                 nodeName = "오피스텔",
                 nodeType = ARSNodeType.NormalMenu,
-                dialogue = "현재 확인된 오피스텔 주소에는 에어컨 설치 및 등록 정보가 없습니다.\n등록 가능한 기기는 제한되어 있습니다."
+                dialogue = "현재 확인된 오피스텔 주소에는 에어컨 설치 및 등록 정보가 없습니다. 등록 가능한 기기는 제한되어 있습니다."
             },
 
             new ARSNodeData
@@ -349,7 +282,95 @@ public static class ARSDataFactory
                 nodeId = 333,
                 nodeName = "단독주택",
                 nodeType = ARSNodeType.NormalMenu,
-                dialogue = "현재 확인된 단독주택 주소에는 에어컨 설치 및 등록 정보가 없습니다.\n등록된 가전 정보가 존재하지 않습니다."
+                dialogue = "현재 확인된 단독주택 주소에는 에어컨 설치 및 등록 정보가 없습니다. 등록된 가전 정보가 존재하지 않습니다."
+            },
+
+            new ARSNodeData
+            {
+                nodeId = 34,
+                nodeName = "기기 코드 안내 - 본인 확인",
+                nodeType = ARSNodeType.NumberInput,
+                dialogue = "기기 코드 안내를 위해 계약자 본인 확인을 진행합니다. 휴대폰 번호 뒤 네 자리를 입력한 후 우물정자를 눌러주세요."
+            },
+
+            new ARSNodeData
+            {
+                nodeId = 34011,
+                nodeName = "기기 코드 안내 - 본인 확인 실패",
+                nodeType = ARSNodeType.NormalMenu,
+                dialogue = "입력하신 번호가 일치하지 않습니다. 기기 코드 안내를 위한 본인 확인에 실패했습니다."
+            },
+
+            new ARSNodeData
+            {
+                nodeId = 3401,
+                nodeName = "기기 코드 안내 - 기기 번호 입력",
+                nodeType = ARSNodeType.NumberInput,
+                dialogue = "기기 코드를 조회할 가전의 기기 번호를 입력한 후 우물정자를 눌러주세요."
+            },
+
+            new ARSNodeData
+            {
+                nodeId = 34012,
+                nodeName = "기기 코드 안내 - 존재하지 않는 기기 번호",
+                nodeType = ARSNodeType.NormalMenu,
+                dialogue = "입력하신 번호는 등록된 기기 번호 목록에 없습니다. 등록된 가전 목록 조회에서 기기 번호를 다시 확인해 주세요."
+            },
+
+            new ARSNodeData
+            {
+                nodeId = 3402,
+                nodeName = "기기 코드 안내 - 상세 코드 입력",
+                nodeType = ARSNodeType.NumberInput,
+                dialogue = "선택하신 기기의 상세 코드를 입력한 후 우물정자를 눌러주세요."
+            },
+
+            new ARSNodeData
+            {
+                nodeId = 34028,
+                nodeName = "기기 코드 안내 - 존재하지 않는 상세 코드",
+                nodeType = ARSNodeType.NormalMenu,
+                dialogue = "입력하신 상세 코드는 등록된 코드 목록에 없습니다. 기기 상세 코드 안내를 다시 확인해 주세요."
+            },
+
+            new ARSNodeData
+            {
+                nodeId = 34029,
+                nodeName = "기기 코드 안내 - 다른 가전의 상세 코드",
+                nodeType = ARSNodeType.NormalMenu,
+                dialogue = "입력하신 상세 코드는 등록된 코드이지만 방금 선택하신 기기의 상세 코드와 일치하지 않습니다. 다른 가전의 상세 코드가 입력된 것으로 보입니다."
+            },
+
+            new ARSNodeData
+            {
+                nodeId = 34021,
+                nodeName = "거실 조명 기기 코드 안내",
+                nodeType = ARSNodeType.NormalMenu,
+                dialogue = "거실 조명의 기기 코드는 {LIGHT_DEVICE_CODE}입니다."
+            },
+
+            new ARSNodeData
+            {
+                nodeId = 34022,
+                nodeName = "거실 스탠드형 에어컨 기기 코드 안내",
+                nodeType = ARSNodeType.NormalMenu,
+                dialogue = "거실 스탠드형 에어컨의 기기 코드는 {AIRCON_DEVICE_CODE}입니다."
+            },
+
+            new ARSNodeData
+            {
+                nodeId = 34023,
+                nodeName = "로봇 청소기 기기 코드 안내",
+                nodeType = ARSNodeType.NormalMenu,
+                dialogue = "로봇 청소기의 기기 코드는 {ROBOT_DEVICE_CODE}입니다."
+            },
+
+            new ARSNodeData
+            {
+                nodeId = 34024,
+                nodeName = "공기청정기 기기 코드 안내",
+                nodeType = ARSNodeType.NormalMenu,
+                dialogue = "공기청정기의 기기 코드는 {PURIFIER_DEVICE_CODE}입니다."
             },
 
             new ARSNodeData

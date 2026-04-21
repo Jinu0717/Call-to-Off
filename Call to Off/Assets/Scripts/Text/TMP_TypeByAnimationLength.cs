@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,26 +13,29 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
 
     [SerializeField] private TMP_Text targetText;
 
-    [Header("Animator ¿¬°á")]
+    [Header("Animator ì—°ê²°")]
     [SerializeField] private Animator animator;
 
-    [Header("Ãâ·Â ¿É¼Ç")]
+    [Header("ì¶œë ¥ ì˜µì…˜")]
     [SerializeField] private TypingMode typingMode = TypingMode.UseAnimationLength;
 
-    [Tooltip("UseFixedCharacterTimeÀÏ ¶§ ¿Ï¼º ±ÛÀÚ 1°³´ç °É¸®´Â ½Ã°£")]
+    [Tooltip("UseFixedCharacterTimeì¼ ë•Œ ì™„ì„± ê¸€ì 1ê°œë‹¹ ê±¸ë¦¬ëŠ” ì‹œê°„")]
     [SerializeField] private float timePerCharacter = 0.1f;
 
     public bool IsTyping { get; private set; }
     public bool IsFinished { get; private set; }
     public TypingMode CurrentMode => typingMode;
 
+    // ì¶”ê°€
+    public TMP_Text TargetText => targetText;
+
     private string currentFullText = "";
     private Coroutine typingCoroutine;
 
     private static readonly string[] CHOSEONG =
     {
-        "¤¡","¤¢","¤¤","¤§","¤¨","¤©","¤±","¤²","¤³","¤µ",
-        "¤¶","¤·","¤¸","¤¹","¤º","¤»","¤¼","¤½","¤¾"
+        "ã„±","ã„²","ã„´","ã„·","ã„¸","ã„¹","ã…","ã…‚","ã…ƒ","ã……",
+        "ã…†","ã…‡","ã…ˆ","ã…‰","ã…Š","ã…‹","ã…Œ","ã…","ã…"
     };
 
     private const int HANGUL_BASE = 0xAC00;
@@ -73,7 +76,7 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
     {
         if (targetText == null)
         {
-            Debug.LogWarning("[TMP_TypeByAnimationLength] TMP_Text°¡ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogWarning("[TMP_TypeByAnimationLength] TMP_Textê°€ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             return;
         }
 

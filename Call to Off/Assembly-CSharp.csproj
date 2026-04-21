@@ -64,10 +64,13 @@
     <Compile Include="Assets\Scripts\Intro.cs" />
     <Compile Include="Assets\Scripts\HandPos.cs" />
     <Compile Include="Assets\Scripts\ARS\ARSGameState.cs" />
-    <Compile Include="Assets\Scripts\TMP_TypeByAnimationLength.cs" />
+    <Compile Include="Assets\Scripts\ButtonScript.cs" />
+    <Compile Include="Assets\Scripts\Text\TMPSmartWrappedLayout.cs" />
+    <Compile Include="Assets\Scripts\Outro.cs" />
     <Compile Include="Assets\Scripts\ARS\ARSUIController.cs" />
     <Compile Include="Assets\Scripts\ARS\ARSTreeInstaller.cs" />
     <Compile Include="Assets\Scripts\ARS\ARSDataFactory.cs" />
+    <Compile Include="Assets\Scripts\Text\TMP_TypeByAnimationLength.cs" />
     <Compile Include="Assets\Scripts\CameraShaking.cs" />
     <Compile Include="Assets\Scripts\ARS\ARSNodeData.cs" />
     <Compile Include="Assets\Scripts\ARS\ARSChoice.cs" />

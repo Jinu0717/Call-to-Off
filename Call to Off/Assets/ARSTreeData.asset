@@ -19,10 +19,11 @@ MonoBehaviour:
     nodeType: 0
     dialogue: "\uC548\uB155\uD558\uC138\uC694. \uC2A4\uB9C8\uC77C \uD648 \uD1B5\uD569
       \uACE0\uAC1D\uC9C0\uC6D0 ARS\uC785\uB2C8\uB2E4. \uC804\uD654 \uC8FC\uC154\uC11C
-      \uAC10\uC0AC\uD569\uB2C8\uB2E4.\n\uC694\uAE08 \uBB38\uC758\uB294 1\uBC88, \uC124\uCE58
+      \uAC10\uC0AC\uD569\uB2C8\uB2E4.\n\uD734\uB300\uD3F0 \uBC88\uD638 {PHONE_FULL}
+      \uACE0\uAC1D\uB2D8,\n\uC694\uAE08 \uBB38\uC758\uB294 1\uBC88, \uC124\uCE58
       \uBC0F \uC774\uC804 \uBB38\uC758\uB294 2\uBC88, \uAC00\uC804 \uC6D0\uACA9 \uC81C\uC5B4
-      \uBC0F \uC2A4\uB9C8\uD2B8\uD648 \uC11C\uBE44\uC2A4\uB294 3\uBC88, \uAE30\uD0C0
-      \uBB38\uC758\uB294 4\uBC88\uC744 \uB20C\uB7EC\uC8FC\uC138\uC694."
+      \uBC0F \uC2A4\uB9C8\uD2B8\uD648 \uC11C\uBE44\uC2A4\uB294 3\uBC88, \uAE30\uD0C0\uBB38\uC758\uB294
+      4\uBC88\uC744 \uB20C\uB7EC\uC8FC\uC138\uC694."
     choices:
     - inputKey: 1
       choiceText: "\uC694\uAE08 \uBB38\uC758"
@@ -197,7 +198,8 @@ MonoBehaviour:
     nodeType: 0
     dialogue: "\uC2A4\uB9C8\uD2B8\uD648 \uC571 \uC5F0\uACB0 \uBB38\uC758\uB294 1\uBC88,
       \uD574\uC678 \uCCB4\uB958 \uC911 \uC6D0\uACA9 \uC81C\uC5B4\uB294 2\uBC88, \uB4F1\uB85D\uB41C
-      \uAC00\uC804 \uBAA9\uB85D \uC870\uD68C\uB294 3\uBC88\uC744 \uB20C\uB7EC\uC8FC\uC138\uC694."
+      \uAC00\uC804 \uBAA9\uB85D \uC870\uD68C\uB294 3\uBC88, \uAE30\uAE30 \uCF54\uB4DC
+      \uC548\uB0B4\uB294 4\uBC88\uC744 \uB20C\uB7EC\uC8FC\uC138\uC694."
     choices:
     - inputKey: 1
       choiceText: "\uC2A4\uB9C8\uD2B8\uD648 \uC571 \uC5F0\uACB0 \uBB38\uC758"
@@ -208,6 +210,9 @@ MonoBehaviour:
     - inputKey: 3
       choiceText: "\uB4F1\uB85D\uB41C \uAC00\uC804 \uBAA9\uB85D \uC870\uD68C"
       nextNodeId: 33
+    - inputKey: 4
+      choiceText: "\uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4"
+      nextNodeId: 34
     inputRule:
       correctValue: 
       successNodeId: -1
@@ -254,11 +259,11 @@ MonoBehaviour:
     nodeName: "\uD574\uC678 \uCCB4\uB958 \uC911 \uC6D0\uACA9 \uC81C\uC5B4"
     nodeType: 0
     dialogue: "\uD574\uC678 \uCCB4\uB958 \uC911 \uB4F1\uB85D\uB41C \uAC00\uC804\uC744
-      \uC81C\uC5B4\uD558\uC2DC\uB824\uBA74 \uBCF8\uC778 \uD655\uC778 \uBC0F \uC6D0\uACA9
-      \uC81C\uC5B4 \uC2B9\uC778 \uC808\uCC28\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4.\n\uACC4\uC57D\uC790
-      \uBCF8\uC778 \uC778\uC99D\uC744 \uC9C4\uD589\uD558\uC2DC\uB824\uBA74 1\uBC88,
-      \uAC00\uC871 \uAD6C\uC131\uC6D0 \uB300\uB9AC \uC778\uC99D\uC744 \uC9C4\uD589\uD558\uC2DC\uB824\uBA74
-      2\uBC88\uC744 \uB20C\uB7EC\uC8FC\uC138\uC694."
+      \uC81C\uC5B4\uD558\uC2DC\uB824\uBA74 \uBCF8\uC778 \uD655\uC778 \uC808\uCC28\uAC00
+      \uD544\uC694\uD569\uB2C8\uB2E4.\n\uACC4\uC57D\uC790 \uBCF8\uC778 \uC778\uC99D\uC744
+      \uC9C4\uD589\uD558\uC2DC\uB824\uBA74 1\uBC88, \uAC00\uC871 \uAD6C\uC131\uC6D0
+      \uB300\uB9AC \uC778\uC99D\uC744 \uC9C4\uD589\uD558\uC2DC\uB824\uBA74 2\uBC88\uC744
+      \uB20C\uB7EC\uC8FC\uC138\uC694."
     choices:
     - inputKey: 1
       choiceText: "\uACC4\uC57D\uC790 \uBCF8\uC778 \uC778\uC99D"
@@ -277,16 +282,14 @@ MonoBehaviour:
   - nodeId: 321
     nodeName: "\uACC4\uC57D\uC790 \uBCF8\uC778 \uC778\uC99D"
     nodeType: 1
-    dialogue: "\uAC00\uC785\uD558\uC2E0 \uD734\uB300\uC804\uD654 \uBC88\uD638 \uB4A4
-      \uB124 \uC790\uB9AC\uB97C \uC785\uB825\uD55C \uD6C4 \uC6B0\uBB3C\uC815\uC790\uB97C
-      \uB20C\uB7EC\uC8FC\uC138\uC694."
+    dialogue: "\uD734\uB300\uD3F0 \uBC88\uD638 \uB4A4 \uB124 \uC790\uB9AC\uB97C \uC785\uB825\uD55C
+      \uD6C4 \uC6B0\uBB3C\uC815\uC790\uB97C \uB20C\uB7EC\uC8FC\uC138\uC694."
     choices: []
     inputRule:
-      correctValue: 0687
-      successNodeId: 3210
-      failNodeId: 3211
-      failMessage: "\uC785\uB825\uD558\uC2E0 \uBC88\uD638\uAC00 \uC77C\uCE58\uD558\uC9C0
-        \uC54A\uC2B5\uB2C8\uB2E4."
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
     costIncrease: 1
     autoLoop: 0
     loopTargetNodeId: -1
@@ -294,7 +297,8 @@ MonoBehaviour:
     nodeName: "\uBCF8\uC778 \uC778\uC99D \uC2E4\uD328"
     nodeType: 0
     dialogue: "\uC785\uB825\uD558\uC2E0 \uBC88\uD638\uAC00 \uC77C\uCE58\uD558\uC9C0
-      \uC54A\uC2B5\uB2C8\uB2E4."
+      \uC54A\uC2B5\uB2C8\uB2E4. \uACC4\uC57D\uC790 \uBCF8\uC778 \uD655\uC778\uC5D0
+      \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4."
     choices: []
     inputRule:
       correctValue: 
@@ -305,25 +309,11 @@ MonoBehaviour:
     autoLoop: 0
     loopTargetNodeId: -1
   - nodeId: 3210
-    nodeName: "\uB4F1\uB85D \uAE30\uAE30 \uBC88\uD638 \uC785\uB825"
+    nodeName: "\uAE30\uAE30 \uCF54\uB4DC \uC785\uB825"
     nodeType: 1
-    dialogue: "\uB4F1\uB85D \uAE30\uAE30 \uBC88\uD638\uB97C \uC785\uB825\uD55C \uD6C4
-      \uC6B0\uBB3C\uC815\uC790\uB97C \uB20C\uB7EC\uC8FC\uC138\uC694."
-    choices: []
-    inputRule:
-      correctValue: 4821
-      successNodeId: 32102
-      failNodeId: 32101
-      failMessage: "\uC785\uB825\uD558\uC2E0 \uB4F1\uB85D \uAE30\uAE30 \uBC88\uD638\uAC00
-        \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
-    costIncrease: 1
-    autoLoop: 0
-    loopTargetNodeId: -1
-  - nodeId: 32101
-    nodeName: "\uB4F1\uB85D \uAE30\uAE30 \uBC88\uD638 \uC785\uB825 \uC2E4\uD328"
-    nodeType: 0
-    dialogue: "\uC785\uB825\uD558\uC2E0 \uB4F1\uB85D \uAE30\uAE30 \uBC88\uD638\uAC00
-      \uC62C\uBC14\uB974\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+    dialogue: "\uC804\uC6D0\uC744 \uC81C\uC5B4\uD560 \uAC00\uC804\uC758 \uAE30\uAE30
+      \uCF54\uB4DC \uB124 \uC790\uB9AC\uB97C \uC785\uB825\uD55C \uD6C4 \uC6B0\uBB3C\uC815\uC790\uB97C
+      \uB20C\uB7EC\uC8FC\uC138\uC694."
     choices: []
     inputRule:
       correctValue: 
@@ -333,26 +323,13 @@ MonoBehaviour:
     costIncrease: 1
     autoLoop: 0
     loopTargetNodeId: -1
-  - nodeId: 32102
-    nodeName: "\uC5D0\uC5B4\uCEE8 \uAE30\uAE30 \uBC88\uD638 \uC785\uB825"
-    nodeType: 1
-    dialogue: "\uC5D0\uC5B4\uCEE8 \uAE30\uAE30 \uBC88\uD638\uB97C \uC785\uB825\uD55C
-      \uD6C4 \uC6B0\uBB3C\uC815\uC790\uB97C \uB20C\uB7EC\uC8FC\uC138\uC694."
-    choices: []
-    inputRule:
-      correctValue: 2
-      successNodeId: 321027
-      failNodeId: 321021
-      failMessage: "\uC785\uB825\uD558\uC2E0 \uC5D0\uC5B4\uCEE8 \uAE30\uAE30 \uBC88\uD638\uAC00
-        \uC62C\uBC14\uB974\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
-    costIncrease: 1
-    autoLoop: 0
-    loopTargetNodeId: -1
-  - nodeId: 321021
-    nodeName: "\uC5D0\uC5B4\uCEE8 \uAE30\uAE30 \uBC88\uD638 \uC785\uB825 \uC2E4\uD328"
+  - nodeId: 321012
+    nodeName: "\uC874\uC7AC\uD558\uC9C0 \uC54A\uB294 \uAE30\uAE30 \uCF54\uB4DC"
     nodeType: 0
-    dialogue: "\uC785\uB825\uD558\uC2E0 \uC5D0\uC5B4\uCEE8 \uAE30\uAE30 \uBC88\uD638\uAC00
-      \uC62C\uBC14\uB974\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+    dialogue: "\uC785\uB825\uD558\uC2E0 \uAE30\uAE30 \uCF54\uB4DC\uB294 \uB4F1\uB85D\uB41C
+      \uBAA9\uB85D\uC5D0 \uC5C6\uC2B5\uB2C8\uB2E4. \uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4
+      \uBA54\uB274\uC5D0\uC11C \uCF54\uB4DC\uB97C \uB2E4\uC2DC \uD655\uC778\uD574
+      \uC8FC\uC138\uC694."
     choices: []
     inputRule:
       correctValue: 
@@ -362,58 +339,14 @@ MonoBehaviour:
     costIncrease: 1
     autoLoop: 0
     loopTargetNodeId: -1
-  - nodeId: 321027
-    nodeName: "\uC5D0\uC5B4\uCEE8 \uC0C1\uC138 \uCF54\uB4DC \uC785\uB825"
-    nodeType: 1
-    dialogue: "\uC5D0\uC5B4\uCEE8 \uC0C1\uC138 \uCF54\uB4DC\uB97C \uC785\uB825\uD55C
-      \uD6C4 \uC6B0\uBB3C\uC815\uC790\uB97C \uB20C\uB7EC\uC8FC\uC138\uC694."
-    choices: []
-    inputRule:
-      correctValue: 7
-      successNodeId: 32107
-      failNodeId: 32103
-      failMessage: "\uC785\uB825\uD558\uC2E0 \uC0C1\uC138 \uCF54\uB4DC\uAC00 \uC62C\uBC14\uB974\uC9C0
-        \uC54A\uC2B5\uB2C8\uB2E4."
-    costIncrease: 1
-    autoLoop: 0
-    loopTargetNodeId: -1
-  - nodeId: 32103
-    nodeName: "\uC5D0\uC5B4\uCEE8 \uC0C1\uC138 \uCF54\uB4DC \uC785\uB825 \uC2E4\uD328"
+  - nodeId: 321013
+    nodeName: "\uB2E4\uB978 \uAC00\uC804\uC758 \uAE30\uAE30 \uCF54\uB4DC \uC785\uB825"
     nodeType: 0
-    dialogue: "\uC785\uB825\uD558\uC2E0 \uC0C1\uC138 \uCF54\uB4DC\uAC00 \uC62C\uBC14\uB974\uC9C0
-      \uC54A\uC2B5\uB2C8\uB2E4."
-    choices: []
-    inputRule:
-      correctValue: 
-      successNodeId: -1
-      failNodeId: -1
-      failMessage: 
-    costIncrease: 1
-    autoLoop: 0
-    loopTargetNodeId: -1
-  - nodeId: 32104
-    nodeName: "\uC5D0\uC5B4\uCEE8 \uAE30\uAE30 \uC815\uBCF4 \uC5C6\uC74C"
-    nodeType: 0
-    dialogue: "\uD604\uC7AC \uD655\uC778\uB41C \uAC70\uC8FC\uC9C0 \uC815\uBCF4\uC5D0\uB294
-      \uB4F1\uB85D\uB41C \uC5D0\uC5B4\uCEE8 \uC124\uCE58 \uB0B4\uC5ED\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.\n\uBA3C\uC800
-      \uB4F1\uB85D\uB41C \uAC00\uC804 \uBAA9\uB85D \uC870\uD68C\uC5D0\uC11C \uAC70\uC8FC\uC9C0
-      \uC815\uBCF4\uB97C \uB2E4\uC2DC \uD655\uC778\uD574 \uC8FC\uC138\uC694."
-    choices: []
-    inputRule:
-      correctValue: 
-      successNodeId: -1
-      failNodeId: -1
-      failMessage: 
-    costIncrease: 1
-    autoLoop: 0
-    loopTargetNodeId: -1
-  - nodeId: 32105
-    nodeName: "\uC5D0\uC5B4\uCEE8 \uC0C1\uC138 \uCF54\uB4DC \uC815\uBCF4 \uC5C6\uC74C"
-    nodeType: 0
-    dialogue: "\uD604\uC7AC \uD655\uC778\uB41C \uAC70\uC8FC\uC9C0 \uC815\uBCF4\uC5D0\uB294
-      \uB4F1\uB85D\uB41C \uC5D0\uC5B4\uCEE8 \uC0C1\uC138 \uCF54\uB4DC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.\n\uBA3C\uC800
-      \uB4F1\uB85D\uB41C \uAC00\uC804 \uBAA9\uB85D \uC870\uD68C\uC5D0\uC11C \uC544\uD30C\uD2B8
-      \uD56D\uBAA9\uACFC \uAE30\uAE30 \uC548\uB0B4\uB97C \uD655\uC778\uD574 \uC8FC\uC138\uC694."
+    dialogue: "\uC785\uB825\uD558\uC2E0 \uAE30\uAE30 \uCF54\uB4DC\uB294 \uB4F1\uB85D\uB41C
+      \uAE30\uAE30 \uCF54\uB4DC\uC774\uC9C0\uB9CC \uAC70\uC2E4 \uC2A4\uD0E0\uB4DC\uD615
+      \uC5D0\uC5B4\uCEE8\uC758 \uCF54\uB4DC\uAC00 \uC544\uB2D9\uB2C8\uB2E4. \uB2E4\uB978
+      \uAC00\uC804\uC758 \uAE30\uAE30 \uCF54\uB4DC\uAC00 \uC785\uB825\uB41C \uAC83\uC73C\uB85C
+      \uBCF4\uC785\uB2C8\uB2E4."
     choices: []
     inputRule:
       correctValue: 
@@ -539,10 +472,11 @@ MonoBehaviour:
     nodeName: "\uC544\uD30C\uD2B8"
     nodeType: 0
     dialogue: "\uB4F1\uB85D\uB41C \uAE30\uAE30 \uBAA9\uB85D\uC744 \uC548\uB0B4\uD574
-      \uB4DC\uB9BD\uB2C8\uB2E4. \uB4F1\uB85D \uAE30\uAE30 \uBC88\uD638\uB294 4821\uC774\uBA70,
-      \uC5D0\uC5B4\uCEE8 \uAE30\uAE30 \uBC88\uD638\uB294 2\uBC88\uC785\uB2C8\uB2E4.\n\uAE30\uAE30\uBCC4
-      \uC0C1\uC138 \uCF54\uB4DC \uC548\uB0B4\uB97C \uC6D0\uD558\uC2DC\uBA74 9\uBC88\uC744
-      \uB20C\uB7EC\uC8FC\uC138\uC694."
+      \uB4DC\uB9BD\uB2C8\uB2E4. \uAC70\uC2E4 \uC870\uBA85\uC740 {LIGHT_DEVICE_NO}\uBC88,
+      \uAC70\uC2E4 \uC2A4\uD0E0\uB4DC\uD615 \uC5D0\uC5B4\uCEE8\uC740 {AIRCON_DEVICE_NO}\uBC88,
+      \uB85C\uBD07 \uCCAD\uC18C\uAE30\uB294 {ROBOT_DEVICE_NO}\uBC88, \uACF5\uAE30\uCCAD\uC815\uAE30\uB294
+      {PURIFIER_DEVICE_NO}\uBC88\uC785\uB2C8\uB2E4.\n\uAE30\uAE30 \uC0C1\uC138 \uCF54\uB4DC
+      \uC548\uB0B4\uB97C \uC6D0\uD558\uC2DC\uBA74 9\uBC88\uC744 \uB20C\uB7EC\uC8FC\uC138\uC694."
     choices:
     - inputKey: 9
       choiceText: "\uC0C1\uC138 \uCF54\uB4DC \uC548\uB0B4"
@@ -559,7 +493,9 @@ MonoBehaviour:
     nodeName: "\uC0C1\uC138 \uCF54\uB4DC \uC548\uB0B4"
     nodeType: 0
     dialogue: "\uAE30\uAE30 \uC0C1\uC138 \uCF54\uB4DC \uC548\uB0B4\uC785\uB2C8\uB2E4.
-      \uC5D0\uC5B4\uCEE8 \uC0C1\uC138 \uCF54\uB4DC\uB294 7\uBC88\uC785\uB2C8\uB2E4."
+      \uAC70\uC2E4 \uC870\uBA85\uC740 {LIGHT_DETAIL_CODE}\uBC88, \uAC70\uC2E4 \uC2A4\uD0E0\uB4DC\uD615
+      \uC5D0\uC5B4\uCEE8\uC740 {AIRCON_DETAIL_CODE}\uBC88, \uB85C\uBD07 \uCCAD\uC18C\uAE30\uB294
+      {ROBOT_DETAIL_CODE}\uBC88, \uACF5\uAE30\uCCAD\uC815\uAE30\uB294 {PURIFIER_DETAIL_CODE}\uBC88\uC785\uB2C8\uB2E4."
     choices: []
     inputRule:
       correctValue: 
@@ -573,8 +509,9 @@ MonoBehaviour:
     nodeName: "\uC624\uD53C\uC2A4\uD154"
     nodeType: 0
     dialogue: "\uD604\uC7AC \uD655\uC778\uB41C \uC624\uD53C\uC2A4\uD154 \uC8FC\uC18C\uC5D0\uB294
-      \uC5D0\uC5B4\uCEE8 \uC124\uCE58 \uBC0F \uB4F1\uB85D \uC815\uBCF4\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.\n\uB4F1\uB85D
-      \uAC00\uB2A5\uD55C \uAE30\uAE30\uB294 \uC81C\uD55C\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4."
+      \uC5D0\uC5B4\uCEE8 \uC124\uCE58 \uBC0F \uB4F1\uB85D \uC815\uBCF4\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.
+      \uB4F1\uB85D \uAC00\uB2A5\uD55C \uAE30\uAE30\uB294 \uC81C\uD55C\uB418\uC5B4
+      \uC788\uC2B5\uB2C8\uB2E4."
     choices: []
     inputRule:
       correctValue: 
@@ -588,8 +525,179 @@ MonoBehaviour:
     nodeName: "\uB2E8\uB3C5\uC8FC\uD0DD"
     nodeType: 0
     dialogue: "\uD604\uC7AC \uD655\uC778\uB41C \uB2E8\uB3C5\uC8FC\uD0DD \uC8FC\uC18C\uC5D0\uB294
-      \uC5D0\uC5B4\uCEE8 \uC124\uCE58 \uBC0F \uB4F1\uB85D \uC815\uBCF4\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.\n\uB4F1\uB85D\uB41C
-      \uAC00\uC804 \uC815\uBCF4\uAC00 \uC874\uC7AC\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+      \uC5D0\uC5B4\uCEE8 \uC124\uCE58 \uBC0F \uB4F1\uB85D \uC815\uBCF4\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.
+      \uB4F1\uB85D\uB41C \uAC00\uC804 \uC815\uBCF4\uAC00 \uC874\uC7AC\uD558\uC9C0
+      \uC54A\uC2B5\uB2C8\uB2E4."
+    choices: []
+    inputRule:
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
+    costIncrease: 1
+    autoLoop: 0
+    loopTargetNodeId: -1
+  - nodeId: 34
+    nodeName: "\uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4 - \uBCF8\uC778 \uD655\uC778"
+    nodeType: 1
+    dialogue: "\uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4\uB97C \uC704\uD574 \uACC4\uC57D\uC790
+      \uBCF8\uC778 \uD655\uC778\uC744 \uC9C4\uD589\uD569\uB2C8\uB2E4. \uD734\uB300\uD3F0
+      \uBC88\uD638 \uB4A4 \uB124 \uC790\uB9AC\uB97C \uC785\uB825\uD55C \uD6C4 \uC6B0\uBB3C\uC815\uC790\uB97C
+      \uB20C\uB7EC\uC8FC\uC138\uC694."
+    choices: []
+    inputRule:
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
+    costIncrease: 1
+    autoLoop: 0
+    loopTargetNodeId: -1
+  - nodeId: 34011
+    nodeName: "\uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4 - \uBCF8\uC778 \uD655\uC778
+      \uC2E4\uD328"
+    nodeType: 0
+    dialogue: "\uC785\uB825\uD558\uC2E0 \uBC88\uD638\uAC00 \uC77C\uCE58\uD558\uC9C0
+      \uC54A\uC2B5\uB2C8\uB2E4. \uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4\uB97C \uC704\uD55C
+      \uBCF8\uC778 \uD655\uC778\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4."
+    choices: []
+    inputRule:
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
+    costIncrease: 1
+    autoLoop: 0
+    loopTargetNodeId: -1
+  - nodeId: 3401
+    nodeName: "\uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4 - \uAE30\uAE30 \uBC88\uD638
+      \uC785\uB825"
+    nodeType: 1
+    dialogue: "\uAE30\uAE30 \uCF54\uB4DC\uB97C \uC870\uD68C\uD560 \uAC00\uC804\uC758
+      \uAE30\uAE30 \uBC88\uD638\uB97C \uC785\uB825\uD55C \uD6C4 \uC6B0\uBB3C\uC815\uC790\uB97C
+      \uB20C\uB7EC\uC8FC\uC138\uC694."
+    choices: []
+    inputRule:
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
+    costIncrease: 1
+    autoLoop: 0
+    loopTargetNodeId: -1
+  - nodeId: 34012
+    nodeName: "\uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4 - \uC874\uC7AC\uD558\uC9C0
+      \uC54A\uB294 \uAE30\uAE30 \uBC88\uD638"
+    nodeType: 0
+    dialogue: "\uC785\uB825\uD558\uC2E0 \uBC88\uD638\uB294 \uB4F1\uB85D\uB41C \uAE30\uAE30
+      \uBC88\uD638 \uBAA9\uB85D\uC5D0 \uC5C6\uC2B5\uB2C8\uB2E4. \uB4F1\uB85D\uB41C
+      \uAC00\uC804 \uBAA9\uB85D \uC870\uD68C\uC5D0\uC11C \uAE30\uAE30 \uBC88\uD638\uB97C
+      \uB2E4\uC2DC \uD655\uC778\uD574 \uC8FC\uC138\uC694."
+    choices: []
+    inputRule:
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
+    costIncrease: 1
+    autoLoop: 0
+    loopTargetNodeId: -1
+  - nodeId: 3402
+    nodeName: "\uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4 - \uC0C1\uC138 \uCF54\uB4DC
+      \uC785\uB825"
+    nodeType: 1
+    dialogue: "\uC120\uD0DD\uD558\uC2E0 \uAE30\uAE30\uC758 \uC0C1\uC138 \uCF54\uB4DC\uB97C
+      \uC785\uB825\uD55C \uD6C4 \uC6B0\uBB3C\uC815\uC790\uB97C \uB20C\uB7EC\uC8FC\uC138\uC694."
+    choices: []
+    inputRule:
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
+    costIncrease: 1
+    autoLoop: 0
+    loopTargetNodeId: -1
+  - nodeId: 34028
+    nodeName: "\uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4 - \uC874\uC7AC\uD558\uC9C0
+      \uC54A\uB294 \uC0C1\uC138 \uCF54\uB4DC"
+    nodeType: 0
+    dialogue: "\uC785\uB825\uD558\uC2E0 \uC0C1\uC138 \uCF54\uB4DC\uB294 \uB4F1\uB85D\uB41C
+      \uCF54\uB4DC \uBAA9\uB85D\uC5D0 \uC5C6\uC2B5\uB2C8\uB2E4. \uAE30\uAE30 \uC0C1\uC138
+      \uCF54\uB4DC \uC548\uB0B4\uB97C \uB2E4\uC2DC \uD655\uC778\uD574 \uC8FC\uC138\uC694."
+    choices: []
+    inputRule:
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
+    costIncrease: 1
+    autoLoop: 0
+    loopTargetNodeId: -1
+  - nodeId: 34029
+    nodeName: "\uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4 - \uB2E4\uB978 \uAC00\uC804\uC758
+      \uC0C1\uC138 \uCF54\uB4DC"
+    nodeType: 0
+    dialogue: "\uC785\uB825\uD558\uC2E0 \uC0C1\uC138 \uCF54\uB4DC\uB294 \uB4F1\uB85D\uB41C
+      \uCF54\uB4DC\uC774\uC9C0\uB9CC \uBC29\uAE08 \uC120\uD0DD\uD558\uC2E0 \uAE30\uAE30\uC758
+      \uC0C1\uC138 \uCF54\uB4DC\uC640 \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.
+      \uB2E4\uB978 \uAC00\uC804\uC758 \uC0C1\uC138 \uCF54\uB4DC\uAC00 \uC785\uB825\uB41C
+      \uAC83\uC73C\uB85C \uBCF4\uC785\uB2C8\uB2E4."
+    choices: []
+    inputRule:
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
+    costIncrease: 1
+    autoLoop: 0
+    loopTargetNodeId: -1
+  - nodeId: 34021
+    nodeName: "\uAC70\uC2E4 \uC870\uBA85 \uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4"
+    nodeType: 0
+    dialogue: "\uAC70\uC2E4 \uC870\uBA85\uC758 \uAE30\uAE30 \uCF54\uB4DC\uB294 {LIGHT_DEVICE_CODE}\uC785\uB2C8\uB2E4."
+    choices: []
+    inputRule:
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
+    costIncrease: 1
+    autoLoop: 0
+    loopTargetNodeId: -1
+  - nodeId: 34022
+    nodeName: "\uAC70\uC2E4 \uC2A4\uD0E0\uB4DC\uD615 \uC5D0\uC5B4\uCEE8 \uAE30\uAE30
+      \uCF54\uB4DC \uC548\uB0B4"
+    nodeType: 0
+    dialogue: "\uAC70\uC2E4 \uC2A4\uD0E0\uB4DC\uD615 \uC5D0\uC5B4\uCEE8\uC758 \uAE30\uAE30
+      \uCF54\uB4DC\uB294 {AIRCON_DEVICE_CODE}\uC785\uB2C8\uB2E4."
+    choices: []
+    inputRule:
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
+    costIncrease: 1
+    autoLoop: 0
+    loopTargetNodeId: -1
+  - nodeId: 34023
+    nodeName: "\uB85C\uBD07 \uCCAD\uC18C\uAE30 \uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4"
+    nodeType: 0
+    dialogue: "\uB85C\uBD07 \uCCAD\uC18C\uAE30\uC758 \uAE30\uAE30 \uCF54\uB4DC\uB294
+      {ROBOT_DEVICE_CODE}\uC785\uB2C8\uB2E4."
+    choices: []
+    inputRule:
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
+    costIncrease: 1
+    autoLoop: 0
+    loopTargetNodeId: -1
+  - nodeId: 34024
+    nodeName: "\uACF5\uAE30\uCCAD\uC815\uAE30 \uAE30\uAE30 \uCF54\uB4DC \uC548\uB0B4"
+    nodeType: 0
+    dialogue: "\uACF5\uAE30\uCCAD\uC815\uAE30\uC758 \uAE30\uAE30 \uCF54\uB4DC\uB294
+      {PURIFIER_DEVICE_CODE}\uC785\uB2C8\uB2E4."
     choices: []
     inputRule:
       correctValue: 
@@ -719,3 +827,30 @@ MonoBehaviour:
     costIncrease: 1
     autoLoop: 0
     loopTargetNodeId: -1
+  phoneMiddle4: xxxx
+  phoneLast4: 0487
+  fullPhoneNumber: 010-xxxx-0487
+  lightInfo:
+    deviceType: 1
+    deviceDisplayName: "\uAC70\uC2E4 \uC870\uBA85"
+    deviceNumber: 2
+    detailCode: 8
+    deviceCode: 7262
+  airconInfo:
+    deviceType: 2
+    deviceDisplayName: "\uAC70\uC2E4 \uC2A4\uD0E0\uB4DC\uD615 \uC5D0\uC5B4\uCEE8"
+    deviceNumber: 1
+    detailCode: 4
+    deviceCode: 7702
+  robotInfo:
+    deviceType: 3
+    deviceDisplayName: "\uB85C\uBD07 \uCCAD\uC18C\uAE30"
+    deviceNumber: 4
+    detailCode: 7
+    deviceCode: 6775
+  purifierInfo:
+    deviceType: 4
+    deviceDisplayName: "\uACF5\uAE30\uCCAD\uC815\uAE30"
+    deviceNumber: 3
+    detailCode: 5
+    deviceCode: 8319

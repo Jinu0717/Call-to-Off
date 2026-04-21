@@ -8,6 +8,8 @@ public class Intro : MonoBehaviour
     private GameObject hand;
     [SerializeField]
     private GameObject ARSText;
+    [SerializeField] 
+    private TMPSmartWrappedLayout smartLayout;
     [SerializeField]
     private GameObject[] canvases;
     [SerializeField]
@@ -62,7 +64,7 @@ public class Intro : MonoBehaviour
         }
 
         typeWriter.StopTypingRoutineOnly();
-        typeWriter.Play(dialogues[0]);
+        PlayDialogueSmart(dialogues[0]);
         UpdateBarWidth();
         ApplyPeopleSprite(false);
     }
@@ -108,17 +110,17 @@ public class Intro : MonoBehaviour
         playerAnim.SetTrigger("Click");
         StartPlayerMotionCheck();
 
-        typeWriter.Play(dialogues[currentIndex]);
+        PlayDialogueSmart(dialogues[currentIndex]);
         currentIndex++;
     }
 
     private void HandleCellPhoneEventByIndex(int index)
     {
-        if (index == 6)
+        if (index == 3)
         {
             cellPhoneAnim.enabled = true;
         }
-        else if (index == 8 || index == 15 || index == 17)
+        else if (index ==  4 || index == 8 || index == 15 || index == 17)
         {
             cellPhoneAnim.SetTrigger("Click");
         }
@@ -209,6 +211,23 @@ public class Intro : MonoBehaviour
         {
             if (peaple[i] != null)
                 peaple[i].sprite = personSprite[index];
+        }
+    }
+
+    private void PlayDialogueSmart(string text)
+    {
+        if (typeWriter == null) return;
+
+        typeWriter.StopTypingRoutineOnly();
+
+        if (smartLayout != null && smartLayout.TargetText == typeWriter.TargetText)
+        {
+            string wrapped = smartLayout.ApplyBestLayout(text);
+            typeWriter.Play(wrapped);
+        }
+        else
+        {
+            typeWriter.Play(text);
         }
     }
 }

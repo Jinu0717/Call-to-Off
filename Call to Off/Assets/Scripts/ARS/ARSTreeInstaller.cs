@@ -17,6 +17,12 @@ public class ARSTreeInstaller : MonoBehaviour
             return;
         }
 
+        if (Application.isPlaying)
+        {
+            Debug.LogWarning("플레이 모드에서는 생성 데이터를 영구 저장하지 않는 것이 좋습니다. 플레이 모드를 종료한 뒤 다시 실행하세요.");
+            return;
+        }
+
         treeData.startNodeId = 0;
         treeData.nodes = ARSDataFactory.CreateAllNodes();
         treeData.BuildDictionary();
