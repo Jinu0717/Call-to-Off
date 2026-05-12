@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\HandPos.cs" />
     <Compile Include="Assets\Scripts\ARS\ARSGameState.cs" />
     <Compile Include="Assets\Scripts\ButtonScript.cs" />
+    <Compile Include="Assets\Scripts\Audio\ARS_Voice.cs" />
     <Compile Include="Assets\Scripts\Text\TMPSmartWrappedLayout.cs" />
     <Compile Include="Assets\Scripts\Outro.cs" />
     <Compile Include="Assets\Scripts\ARS\ARSUIController.cs" />

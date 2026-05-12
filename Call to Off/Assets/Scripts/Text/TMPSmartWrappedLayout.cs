@@ -41,13 +41,9 @@ public class TMPSmartWrappedLayout : MonoBehaviour
 
         float originalFontSize = targetText.fontSize;
         bool originalAutoSize = targetText.enableAutoSizing;
-        bool originalWrap = targetText.enableWordWrapping;
 
         if (disableAutoSize)
             targetText.enableAutoSizing = false;
-
-        if (disableWordWrapping)
-            targetText.enableWordWrapping = false;
 
         string bestText = rawText ?? "";
         float bestSize = minFontSize;
@@ -75,9 +71,6 @@ public class TMPSmartWrappedLayout : MonoBehaviour
 
         if (!disableAutoSize)
             targetText.enableAutoSizing = originalAutoSize;
-
-        if (!disableWordWrapping)
-            targetText.enableWordWrapping = originalWrap;
 
         return bestText;
     }

@@ -19,8 +19,8 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
     [Header("출력 옵션")]
     [SerializeField] private TypingMode typingMode = TypingMode.UseAnimationLength;
 
-    [Tooltip("UseFixedCharacterTime일 때 완성 글자 1개당 걸리는 시간")]
-    [SerializeField] private float timePerCharacter = 0.1f;
+    [Tooltip("전체 텍스트가 출력되는 데 걸리는 시간")]
+    public float totalTypingTime = 2f;
 
     public bool IsTyping { get; private set; }
     public bool IsFinished { get; private set; }
@@ -142,32 +142,27 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
 
     private IEnumerator TypeByFixedCharacterTime(string text)
     {
-        string fixedPart = "";
+        List<string> frames = BuildTypingFrames(text);
 
-        foreach (char c in text)
+        if (frames.Count == 0)
+            yield break;
+
+        float totalTime = Mathf.Max(0f, totalTypingTime);
+
+        if (totalTime <= 0f)
         {
-            List<string> steps = GetCharacterSteps(c);
+            targetText.text = text;
+            yield break;
+        }
 
-            if (steps == null || steps.Count == 0)
-            {
-                fixedPart += c;
-                targetText.text = fixedPart;
-                continue;
-            }
+        float stepTime = totalTime / frames.Count;
 
-            float totalCharTime = Mathf.Max(0f, timePerCharacter);
-            float stepTime = totalCharTime / steps.Count;
+        for (int i = 0; i < frames.Count; i++)
+        {
+            targetText.text = frames[i];
 
-            for (int i = 0; i < steps.Count; i++)
-            {
-                targetText.text = fixedPart + steps[i];
-
-                if (i < steps.Count - 1)
-                    yield return new WaitForSeconds(stepTime);
-            }
-
-            fixedPart += c;
-            yield return new WaitForSeconds(stepTime);
+            if (i < frames.Count - 1)
+                yield return new WaitForSeconds(stepTime);
         }
     }
 

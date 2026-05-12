@@ -28,9 +28,7 @@ public class ARSTreeData : ScriptableObject
     public List<ARSNodeData> nodes = new List<ARSNodeData>();
 
     [Header("현재 플레이에서 사용할 랜덤 값 (디버그 표시용)")]
-    [SerializeField] private string phoneMiddle4 = "xxxx";
     [SerializeField] private string phoneLast4 = "0000";
-    [SerializeField] private string fullPhoneNumber = "010-1234-0000";
 
     [SerializeField]
     private ARSDeviceRuntimeInfo lightInfo = new ARSDeviceRuntimeInfo
@@ -93,17 +91,11 @@ public class ARSTreeData : ScriptableObject
         return null;
     }
 
-    /// <summary>
-    /// 플레이 시작 시 딱 한 번 호출해서 이번 플레이용 랜덤값을 만든다.
-    /// forceRegenerate=true면 무조건 새로 뽑는다.
-    /// </summary>
     public void InitializeRuntimeSession(bool forceRegenerate = false)
     {
-        if (!Application.isPlaying)
-            return;
+        if (!Application.isPlaying) { return; }
 
-        if (sessionInitialized && !forceRegenerate)
-            return;
+        if (sessionInitialized && !forceRegenerate) { return; }
 
         GenerateRandomSessionValues();
         sessionInitialized = true;
@@ -115,7 +107,6 @@ public class ARSTreeData : ScriptableObject
     public void GenerateRandomSessionValues()
     {
         phoneLast4 = Random.Range(0, 10000).ToString("0000");
-        fullPhoneNumber = $"010-xxxx-{phoneLast4}";
 
         List<int> deviceNumbers = new List<int> { 1, 2, 3, 4 };
         Shuffle(deviceNumbers);
@@ -145,8 +136,7 @@ public class ARSTreeData : ScriptableObject
         while (true)
         {
             string code = Random.Range(0, 10000).ToString("0000");
-            if (usedCodes.Add(code))
-                return code;
+            if (usedCodes.Add(code)) { return code; }
         }
     }
 
@@ -162,10 +152,6 @@ public class ARSTreeData : ScriptableObject
     }
 
     public string GetPhoneLast4() => phoneLast4;
-    public string GetFullPhoneNumber()
-    {
-        return $"010-xxxx-{phoneLast4}";
-    }
 
     public ARSDeviceRuntimeInfo GetDeviceInfo(SmartHomeDeviceType type)
     {
@@ -236,7 +222,6 @@ public class ARSTreeData : ScriptableObject
             return "";
 
         return raw
-            .Replace("{PHONE_FULL}", GetFullPhoneNumber())
             .Replace("{PHONE_LAST4}", GetPhoneLast4())
 
             .Replace("{LIGHT_DEVICE_NO}", lightInfo.deviceNumber.ToString())
