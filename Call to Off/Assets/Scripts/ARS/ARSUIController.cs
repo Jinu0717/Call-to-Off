@@ -14,6 +14,12 @@ public class ARSUIController : MonoBehaviour
     [SerializeField] private TMP_TypeByAnimationLength typeWriter;
     [SerializeField] private TMPSmartWrappedLayout smartLayout;
 
+    [Header("ARS 음성 출력")]
+    [SerializeField] private ARS_Voice arsVoice;
+
+    [Header("음성 재생 중 입력 막기")]
+    [SerializeField] private bool blockInputWhileVoicePlaying = true;
+
     [Header("Outro")]
     [SerializeField] private Outro outro;
 
@@ -26,6 +32,13 @@ public class ARSUIController : MonoBehaviour
     [Header("공통 안내문")]
     [TextArea(2, 3)]
     [SerializeField] private string upperMenuGuide = "상위로 올라가고 싶다면 0번을 눌러주세요.";
+
+    [Header("자동 이동 노드 설정")]
+    [SerializeField] private int waitingNodeId = 311;
+    [SerializeField] private int afterWaitingNodeId = 312;
+    [SerializeField] private float waitingNodeDelay = 5f;
+
+    private Coroutine autoMoveRoutine;
 
     private ARSNodeData currentNode;
     private string inputBuffer = "";
@@ -42,7 +55,6 @@ public class ARSUIController : MonoBehaviour
             return;
         }
 
-        // 플레이 시작할 때 딱 한 번 이번 세션용 랜덤값 생성
         treeData.InitializeRuntimeSession(true);
 
         if (useDebugLog)
@@ -65,8 +77,69 @@ public class ARSUIController : MonoBehaviour
         return currentNode != null && currentNode.nodeType == ARSNodeType.EndingSuccess;
     }
 
+    private bool IsInputLocked()
+    {
+        if (typeWriter != null && typeWriter.IsTyping)
+            return true;
+
+        if (blockInputWhileVoicePlaying && arsVoice != null && arsVoice.IsPlaying)
+            return true;
+
+        if (autoMoveRoutine != null)
+            return true;
+
+        return false;
+    }
+
+    private bool ShouldShowUpperMenuGuide(ARSNodeData node)
+    {
+        if (node == null)
+            return false;
+
+        // 시작 노드에서는 공통 안내문 출력 X
+        if (node.nodeId == startNodeId)
+            return false;
+
+        // 311번 대기 노드에서는 공통 안내문 출력 X
+        if (node.nodeId == waitingNodeId)
+            return false;
+
+        // 숫자 입력 노드에서는 공통 안내문 출력 X
+        if (node.nodeType == ARSNodeType.NumberInput)
+            return false;
+
+        // 성공 엔딩 노드에서는 공통 안내문 출력 X
+        if (node.nodeType == ARSNodeType.EndingSuccess)
+            return false;
+
+        // 공통 안내문 문구가 비어 있으면 출력 X
+        if (string.IsNullOrWhiteSpace(upperMenuGuide))
+            return false;
+
+        return true;
+    }
+
+    private void PlayCurrentNodeVoice()
+    {
+        if (arsVoice == null)
+            return;
+
+        if (currentNode == null)
+            return;
+
+        bool playLastClip = ShouldShowUpperMenuGuide(currentNode);
+
+        arsVoice.PlayNode(currentNode, treeData, playLastClip);
+    }
+
     public void ShowNode(int nodeId)
     {
+        if (autoMoveRoutine != null)
+        {
+            StopCoroutine(autoMoveRoutine);
+            autoMoveRoutine = null;
+        }
+
         ARSNodeData node = treeData.GetNode(nodeId);
 
         if (node == null)
@@ -82,9 +155,18 @@ public class ARSUIController : MonoBehaviour
             selectedCodeGuideDevice = SmartHomeDeviceType.None;
 
         if (useDebugLog)
+        {
             Debug.Log($"[ARS 이동] nodeId={nodeId}, nodeName={node.nodeName}, selectedCodeGuideDevice={selectedCodeGuideDevice}");
+        }
 
         RefreshUI();
+        PlayCurrentNodeVoice();
+
+        if (nodeId == waitingNodeId)
+        {
+            autoMoveRoutine = StartCoroutine(CoMoveToNextNodeAfterDelay(waitingNodeId, afterWaitingNodeId, waitingNodeDelay));
+            return;
+        }
 
         if (IsSuccessEndingNode())
         {
@@ -105,7 +187,8 @@ public class ARSUIController : MonoBehaviour
 
     private IEnumerator CoWaitTypingAndCallOutro()
     {
-        while (typeWriter != null && typeWriter.IsTyping)
+        while ((typeWriter != null && typeWriter.IsTyping) ||
+               (arsVoice != null && arsVoice.IsPlaying))
         {
             yield return null;
         }
@@ -126,7 +209,7 @@ public class ARSUIController : MonoBehaviour
     {
         if (currentNode == null) return;
         if (IsSuccessEndingNode()) return;
-        if (typeWriter != null && typeWriter.IsTyping) return;
+        if (IsInputLocked()) return;
 
         if (currentNode.nodeType == ARSNodeType.NumberInput)
         {
@@ -161,18 +244,18 @@ public class ARSUIController : MonoBehaviour
 
         if (num == 9)
         {
-            RefreshUI();
+            RefreshCurrentNode();
             return;
         }
 
-        RefreshUI();
+        RefreshCurrentNode();
     }
 
     public void PressSharp()
     {
         if (currentNode == null) return;
         if (IsSuccessEndingNode()) return;
-        if (typeWriter != null && typeWriter.IsTyping) return;
+        if (IsInputLocked()) return;
         if (currentNode.nodeType != ARSNodeType.NumberInput) return;
         if (string.IsNullOrEmpty(inputBuffer)) return;
 
@@ -202,7 +285,7 @@ public class ARSUIController : MonoBehaviour
         if (currentNode.inputRule == null)
         {
             Debug.LogWarning($"노드 {currentNode.nodeId} 에 inputRule이 없습니다.");
-            RefreshUI();
+            RefreshCurrentNode();
             return;
         }
 
@@ -214,11 +297,13 @@ public class ARSUIController : MonoBehaviour
         else
         {
             if (currentNode.inputRule.failNodeId >= 0)
+            {
                 ShowNode(currentNode.inputRule.failNodeId);
+            }
             else
             {
                 inputBuffer = "";
-                RefreshUI();
+                RefreshCurrentNode();
             }
         }
     }
@@ -305,12 +390,15 @@ public class ARSUIController : MonoBehaviour
             case SmartHomeDeviceType.Light:
                 ShowNode(34021);
                 return;
+
             case SmartHomeDeviceType.Aircon:
                 ShowNode(34022);
                 return;
+
             case SmartHomeDeviceType.RobotVacuum:
                 ShowNode(34023);
                 return;
+
             case SmartHomeDeviceType.AirPurifier:
                 ShowNode(34024);
                 return;
@@ -320,7 +408,7 @@ public class ARSUIController : MonoBehaviour
     public void Backspace()
     {
         if (IsSuccessEndingNode()) return;
-        if (typeWriter != null && typeWriter.IsTyping) return;
+        if (IsInputLocked()) return;
         if (string.IsNullOrEmpty(inputBuffer)) return;
 
         inputBuffer = inputBuffer.Substring(0, inputBuffer.Length - 1);
@@ -330,7 +418,7 @@ public class ARSUIController : MonoBehaviour
     public void ClearInput()
     {
         if (IsSuccessEndingNode()) return;
-        if (typeWriter != null && typeWriter.IsTyping) return;
+        if (IsInputLocked()) return;
 
         inputBuffer = "";
         RefreshInputPreview();
@@ -346,6 +434,19 @@ public class ARSUIController : MonoBehaviour
         if (typeWriter != null)
         {
             typeWriter.StopTypingRoutineOnly();
+
+            float voiceLength = 0f;
+
+            if (arsVoice != null && currentNode != null)
+            {
+                bool playLastClip = ShouldShowUpperMenuGuide(currentNode);
+                voiceLength = arsVoice.GetNodeVoiceLength(currentNode, treeData, playLastClip);
+            }
+
+            if (voiceLength > 0f)
+            {
+                typeWriter.SetAnimationLength(voiceLength);
+            }
 
             if (smartLayout != null && smartLayout.TargetText == typeWriter.TargetText)
             {
@@ -363,20 +464,12 @@ public class ARSUIController : MonoBehaviour
 
     private string BuildDisplayedDialogue(ARSNodeData node)
     {
-        if (node == null) return "";
+        if (node == null)
+            return "";
 
         string text = treeData.FormatDialogue(node.dialogue ?? "");
 
-        if (node.nodeId == startNodeId)
-            return text;
-
-        if (node.nodeType == ARSNodeType.NumberInput)
-            return text;
-
-        if (node.nodeType == ARSNodeType.EndingSuccess)
-            return text;
-
-        if (!string.IsNullOrWhiteSpace(upperMenuGuide))
+        if (ShouldShowUpperMenuGuide(node))
         {
             if (!string.IsNullOrWhiteSpace(text))
                 text += "\n";
@@ -389,7 +482,8 @@ public class ARSUIController : MonoBehaviour
 
     private void RefreshInputPreview()
     {
-        if (inputPreviewText == null) return;
+        if (inputPreviewText == null)
+            return;
 
         if (currentNode != null && currentNode.nodeType == ARSNodeType.NumberInput)
             inputPreviewText.text = inputBuffer;
@@ -400,5 +494,29 @@ public class ARSUIController : MonoBehaviour
     public void RefreshCurrentNode()
     {
         RefreshUI();
+        PlayCurrentNodeVoice();
+    }
+
+    private IEnumerator CoMoveToNextNodeAfterDelay(int fromNodeId, int toNodeId, float delay)
+    {
+        float timer = 0f;
+
+        while (timer < delay)
+        {
+            if (currentNode == null || currentNode.nodeId != fromNodeId)
+            {
+                autoMoveRoutine = null;
+                yield break;
+            }
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        if (currentNode != null && currentNode.nodeId == fromNodeId)
+        {
+            autoMoveRoutine = null;
+            ShowNode(toNodeId);
+        }
     }
 }

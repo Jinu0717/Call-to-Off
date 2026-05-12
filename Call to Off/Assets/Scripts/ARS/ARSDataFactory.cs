@@ -11,7 +11,7 @@ public static class ARSDataFactory
                 nodeId = 0,
                 nodeName = "시작",
                 nodeType = ARSNodeType.NormalMenu,
-                dialogue = "안녕하세요. 스마일 홈 통합 고객지원 ARS입니다. 전화 주셔서 감사합니다.\n휴대폰 번호 {PHONE_FULL} 고객님,\n요금 문의는 1번, 설치 및 이전 문의는 2번, 가전 원격 제어 및 스마트홈 서비스는 3번, 기타문의는 4번을 눌러주세요.",
+                dialogue = "안녕하세요. 스마일 홈 통합 고객지원 ARS입니다. 전화 주셔서 감사합니다.\n휴대폰 번호 010 - xxxx - {PHONE_LAST4} 고객님,\n요금 문의는 1번, 설치 및 이전 문의는 2번, 가전 원격 제어 및 스마트홈 서비스는 3번, 기타문의는 4번을 눌러주세요.",
                 choices = new List<ARSChoice>
                 {
                     new ARSChoice { inputKey = "1", choiceText = "요금 문의", nextNodeId = 1 },
@@ -129,7 +129,15 @@ public static class ARSDataFactory
                 nodeId = 311,
                 nodeName = "상담원 연결",
                 nodeType = ARSNodeType.Loop,
-                dialogue = "상담원 연결을 도와드리겠습니다. 현재 대기 인원은 23명이며, 예상 대기 시간은 41분입니다."
+                dialogue = "상담원 연결을 도와드리겠습니다."
+            },
+
+            new ARSNodeData
+            {
+                nodeId = 312,
+                nodeName = "상담원 연결 실패",
+                nodeType = ARSNodeType.Loop,
+                dialogue = "현재 대기 인원은 23명이며, 예상 대기 시간은 41분입니다."
             },
 
             new ARSNodeData

@@ -240,4 +240,9 @@ public class TMP_TypeByAnimationLength : MonoBehaviour
         int code = HANGUL_BASE + ((lIndex * V_COUNT) + vIndex) * T_COUNT;
         return (char)code;
     }
+
+    public void SetAnimationLength(float length)
+    {
+        totalTypingTime = Mathf.Max(0.1f, length) - 0.75f;
+    }
 }

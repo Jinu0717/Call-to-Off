@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\ARS\ARSDataFactory.cs" />
     <Compile Include="Assets\Scripts\Text\TMP_TypeByAnimationLength.cs" />
     <Compile Include="Assets\Scripts\CameraShaking.cs" />
+    <Compile Include="Assets\Scripts\Battery.cs" />
     <Compile Include="Assets\Scripts\ARS\ARSNodeData.cs" />
     <Compile Include="Assets\Scripts\ARS\ARSChoice.cs" />
     <Compile Include="Assets\Scripts\ARS\ARSTreeData.cs" />

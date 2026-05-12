@@ -19,11 +19,11 @@ MonoBehaviour:
     nodeType: 0
     dialogue: "\uC548\uB155\uD558\uC138\uC694. \uC2A4\uB9C8\uC77C \uD648 \uD1B5\uD569
       \uACE0\uAC1D\uC9C0\uC6D0 ARS\uC785\uB2C8\uB2E4. \uC804\uD654 \uC8FC\uC154\uC11C
-      \uAC10\uC0AC\uD569\uB2C8\uB2E4.\n\uD734\uB300\uD3F0 \uBC88\uD638 {PHONE_FULL}
-      \uACE0\uAC1D\uB2D8,\n\uC694\uAE08 \uBB38\uC758\uB294 1\uBC88, \uC124\uCE58
-      \uBC0F \uC774\uC804 \uBB38\uC758\uB294 2\uBC88, \uAC00\uC804 \uC6D0\uACA9 \uC81C\uC5B4
-      \uBC0F \uC2A4\uB9C8\uD2B8\uD648 \uC11C\uBE44\uC2A4\uB294 3\uBC88, \uAE30\uD0C0\uBB38\uC758\uB294
-      4\uBC88\uC744 \uB20C\uB7EC\uC8FC\uC138\uC694."
+      \uAC10\uC0AC\uD569\uB2C8\uB2E4.\n\uD734\uB300\uD3F0 \uBC88\uD638 010 - xxxx
+      - {PHONE_LAST4} \uACE0\uAC1D\uB2D8,\n\uC694\uAE08 \uBB38\uC758\uB294 1\uBC88,
+      \uC124\uCE58 \uBC0F \uC774\uC804 \uBB38\uC758\uB294 2\uBC88, \uAC00\uC804 \uC6D0\uACA9
+      \uC81C\uC5B4 \uBC0F \uC2A4\uB9C8\uD2B8\uD648 \uC11C\uBE44\uC2A4\uB294 3\uBC88,
+      \uAE30\uD0C0\uBB38\uC758\uB294 4\uBC88\uC744 \uB20C\uB7EC\uC8FC\uC138\uC694."
     choices:
     - inputKey: 1
       choiceText: "\uC694\uAE08 \uBB38\uC758"
@@ -243,9 +243,21 @@ MonoBehaviour:
   - nodeId: 311
     nodeName: "\uC0C1\uB2F4\uC6D0 \uC5F0\uACB0"
     nodeType: 4
-    dialogue: "\uC0C1\uB2F4\uC6D0 \uC5F0\uACB0\uC744 \uB3C4\uC640\uB4DC\uB9AC\uACA0\uC2B5\uB2C8\uB2E4.
-      \uD604\uC7AC \uB300\uAE30 \uC778\uC6D0\uC740 23\uBA85\uC774\uBA70, \uC608\uC0C1
-      \uB300\uAE30 \uC2DC\uAC04\uC740 41\uBD84\uC785\uB2C8\uB2E4."
+    dialogue: "\uC0C1\uB2F4\uC6D0 \uC5F0\uACB0\uC744 \uB3C4\uC640\uB4DC\uB9AC\uACA0\uC2B5\uB2C8\uB2E4."
+    choices: []
+    inputRule:
+      correctValue: 
+      successNodeId: -1
+      failNodeId: -1
+      failMessage: 
+    costIncrease: 1
+    autoLoop: 0
+    loopTargetNodeId: -1
+  - nodeId: 312
+    nodeName: "\uC0C1\uB2F4\uC6D0 \uC5F0\uACB0 \uC2E4\uD328"
+    nodeType: 4
+    dialogue: "\uD604\uC7AC \uB300\uAE30 \uC778\uC6D0\uC740 23\uBA85\uC774\uBA70,
+      \uC608\uC0C1 \uB300\uAE30 \uC2DC\uAC04\uC740 41\uBD84\uC785\uB2C8\uB2E4."
     choices: []
     inputRule:
       correctValue: 
@@ -827,30 +839,28 @@ MonoBehaviour:
     costIncrease: 1
     autoLoop: 0
     loopTargetNodeId: -1
-  phoneMiddle4: xxxx
-  phoneLast4: 0487
-  fullPhoneNumber: 010-xxxx-0487
+  phoneLast4: 0071
   lightInfo:
     deviceType: 1
     deviceDisplayName: "\uAC70\uC2E4 \uC870\uBA85"
-    deviceNumber: 2
-    detailCode: 8
-    deviceCode: 7262
+    deviceNumber: 4
+    detailCode: 4
+    deviceCode: 5812
   airconInfo:
     deviceType: 2
     deviceDisplayName: "\uAC70\uC2E4 \uC2A4\uD0E0\uB4DC\uD615 \uC5D0\uC5B4\uCEE8"
-    deviceNumber: 1
-    detailCode: 4
-    deviceCode: 7702
+    deviceNumber: 2
+    detailCode: 8
+    deviceCode: 6410
   robotInfo:
     deviceType: 3
     deviceDisplayName: "\uB85C\uBD07 \uCCAD\uC18C\uAE30"
-    deviceNumber: 4
-    detailCode: 7
-    deviceCode: 6775
+    deviceNumber: 3
+    detailCode: 5
+    deviceCode: 7691
   purifierInfo:
     deviceType: 4
     deviceDisplayName: "\uACF5\uAE30\uCCAD\uC815\uAE30"
-    deviceNumber: 3
-    detailCode: 5
-    deviceCode: 8319
+    deviceNumber: 1
+    detailCode: 7
+    deviceCode: 3209
