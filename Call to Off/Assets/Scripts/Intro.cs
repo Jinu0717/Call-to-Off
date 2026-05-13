@@ -58,6 +58,7 @@ public class Intro : MonoBehaviour
         cellPhoneAnim.enabled = false;
 
         isEnd = false;
+        Cursor.visible = false;
     }
 
     private void Start()

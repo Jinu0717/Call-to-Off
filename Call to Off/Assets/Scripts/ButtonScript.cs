@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class ButtonScript : MonoBehaviour
 {
+    private void Awake() => Cursor.visible = true;
+
     public void click(string sceneName) => SceneManager.LoadScene(sceneName);
 
     public void QuitGame()
