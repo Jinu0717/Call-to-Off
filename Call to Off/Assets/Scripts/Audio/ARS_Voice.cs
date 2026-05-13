@@ -27,6 +27,7 @@ public class ARS_Voice : MonoBehaviour
     [SerializeField] private List<AudioClip> numberClips = new List<AudioClip>();
 
     [Header("공통 안내문 마지막 클립")]
+    [Tooltip("upperMenuGuide가 붙는 노드에서 마지막에 재생될 클립입니다.")]
     [SerializeField] private AudioClip lastClip;
 
     [Header("재생 간격")]
@@ -35,12 +36,22 @@ public class ARS_Voice : MonoBehaviour
     [Header("{} 숫자 자동 음성 출력")]
     [SerializeField] private bool usePlaceholderNumberVoice = true;
 
+    [Header("특정 노드 느린 재생 설정")]
+    [SerializeField] private int slowNodeId = 431;
+    [SerializeField] private float normalPlaybackSpeed = 1f;
+    [SerializeField] private float slowPlaybackSpeed = 0.75f;
+
+    [Header("느린 재생 유지 여부")]
+    [SerializeField] private bool keepSlowPlaybackAfterStartNode = false;
+
+
     [Header("디버그")]
     [SerializeField] private bool useDebugLog = true;
 
     private readonly Dictionary<char, AudioClip> numberClipMap = new Dictionary<char, AudioClip>();
 
     private Coroutine playRoutine;
+    private int currentPlayingNodeId = -1;
 
     public bool IsPlaying { get; private set; }
 
@@ -125,6 +136,8 @@ public class ARS_Voice : MonoBehaviour
 
         StopVoice();
 
+        currentPlayingNodeId = node.nodeId;
+
         NodeVoiceClip target = FindNodeVoiceClip(node.nodeId);
 
         if (target == null)
@@ -166,17 +179,20 @@ public class ARS_Voice : MonoBehaviour
         }
 
         if (audioSource != null)
+        {
             audioSource.Stop();
+            audioSource.pitch = normalPlaybackSpeed;
+        }
 
         IsPlaying = false;
     }
 
     private IEnumerator CoPlayNodeVoice(
-    ARSNodeData node,
-    ARSTreeData treeData,
-    List<AudioClip> clips,
-    bool playLastClip
-)
+        ARSNodeData node,
+        ARSTreeData treeData,
+        List<AudioClip> clips,
+        bool playLastClip
+    )
     {
         IsPlaying = true;
 
@@ -201,6 +217,10 @@ public class ARS_Voice : MonoBehaviour
 
         IsPlaying = false;
         playRoutine = null;
+        currentPlayingNodeId = -1;
+
+        if (audioSource != null)
+            audioSource.pitch = normalPlaybackSpeed;
     }
 
     private List<string> ExtractPlaceholderNumbers(string rawDialogue, ARSTreeData treeData)
@@ -259,7 +279,7 @@ public class ARS_Voice : MonoBehaviour
     private IEnumerator CoPlayClipsWithNumbers(List<AudioClip> clips, List<string> numberGroups)
     {
         /*
-         * 예시 1:
+         * 예시:
          *
          * 대사:
          * "고객님의 전화번호는 {PHONE_FULL} 입니다."
@@ -272,24 +292,6 @@ public class ARS_Voice : MonoBehaviour
          * clips[0]
          * 숫자 음성
          * clips[1]
-         *
-         *
-         * 예시 2:
-         *
-         * 대사:
-         * "기기 번호는 {DEVICE_NO}, 상세 코드는 {DETAIL_CODE} 입니다."
-         *
-         * Clips:
-         * 0번: "기기 번호는"
-         * 1번: "상세 코드는"
-         * 2번: "입니다."
-         *
-         * 재생:
-         * clips[0]
-         * 숫자 음성
-         * clips[1]
-         * 숫자 음성
-         * clips[2]
          */
 
         int clipIndex = 0;
@@ -317,9 +319,6 @@ public class ARS_Voice : MonoBehaviour
         /*
          * {} 숫자 삽입이 없는 일반 노드는
          * 등록된 오디오를 순서대로 재생한다.
-         *
-         * clips가 1개면 1개만 재생.
-         * clips가 2개 이상이면 순서대로 재생.
          */
 
         for (int i = 0; i < clips.Count; i++)
@@ -333,11 +332,14 @@ public class ARS_Voice : MonoBehaviour
         if (clip == null || audioSource == null)
             yield break;
 
+        audioSource.pitch = GetPlaybackSpeedByNodeId(currentPlayingNodeId);
         audioSource.clip = clip;
         audioSource.Play();
 
         while (audioSource != null && audioSource.isPlaying)
             yield return null;
+
+        audioSource.pitch = normalPlaybackSpeed;
 
         if (clipGap > 0f)
             yield return new WaitForSeconds(clipGap);
@@ -364,6 +366,17 @@ public class ARS_Voice : MonoBehaviour
         }
     }
 
+    private float GetPlaybackSpeedByNodeId(int nodeId)
+    {
+        if (nodeId == slowNodeId && !keepSlowPlaybackAfterStartNode)
+            keepSlowPlaybackAfterStartNode = true;
+
+        if (keepSlowPlaybackAfterStartNode)
+            return slowPlaybackSpeed;
+
+        return normalPlaybackSpeed;
+    }
+
     public float GetNodeVoiceLength(ARSNodeData node, ARSTreeData treeData, bool playLastClip)
     {
         if (node == null)
@@ -386,23 +399,22 @@ public class ARS_Voice : MonoBehaviour
 
         if (numberGroups.Count > 0)
         {
-            totalLength += GetClipsWithNumbersLength(target.clips, numberGroups);
+            totalLength += GetClipsWithNumbersLength(target.clips, numberGroups, node.nodeId);
         }
         else
         {
-            totalLength += GetClipsOnlyLength(target.clips);
+            totalLength += GetClipsOnlyLength(target.clips, node.nodeId);
         }
 
         if (playLastClip && lastClip != null)
         {
-            totalLength += lastClip.length;
-            totalLength += clipGap;
+            totalLength += GetSingleClipLength(lastClip, node.nodeId);
         }
 
         return totalLength;
     }
 
-    private float GetClipsWithNumbersLength(List<AudioClip> clips, List<string> numberGroups)
+    private float GetClipsWithNumbersLength(List<AudioClip> clips, List<string> numberGroups, int nodeId)
     {
         float totalLength = 0f;
         int clipIndex = 0;
@@ -411,35 +423,35 @@ public class ARS_Voice : MonoBehaviour
         {
             if (clipIndex < clips.Count)
             {
-                totalLength += GetSingleClipLength(clips[clipIndex]);
+                totalLength += GetSingleClipLength(clips[clipIndex], nodeId);
                 clipIndex++;
             }
 
-            totalLength += GetDigitsLength(numberGroups[i]);
+            totalLength += GetDigitsLength(numberGroups[i], nodeId);
         }
 
         while (clipIndex < clips.Count)
         {
-            totalLength += GetSingleClipLength(clips[clipIndex]);
+            totalLength += GetSingleClipLength(clips[clipIndex], nodeId);
             clipIndex++;
         }
 
         return totalLength;
     }
 
-    private float GetClipsOnlyLength(List<AudioClip> clips)
+    private float GetClipsOnlyLength(List<AudioClip> clips, int nodeId)
     {
         float totalLength = 0f;
 
         for (int i = 0; i < clips.Count; i++)
         {
-            totalLength += GetSingleClipLength(clips[i]);
+            totalLength += GetSingleClipLength(clips[i], nodeId);
         }
 
         return totalLength;
     }
 
-    private float GetDigitsLength(string digits)
+    private float GetDigitsLength(string digits, int nodeId)
     {
         if (string.IsNullOrEmpty(digits))
             return 0f;
@@ -453,17 +465,20 @@ public class ARS_Voice : MonoBehaviour
             if (!numberClipMap.TryGetValue(digit, out AudioClip digitClip))
                 continue;
 
-            totalLength += GetSingleClipLength(digitClip);
+            totalLength += GetSingleClipLength(digitClip, nodeId);
         }
 
         return totalLength;
     }
 
-    private float GetSingleClipLength(AudioClip clip)
+    private float GetSingleClipLength(AudioClip clip, int nodeId)
     {
         if (clip == null)
             return 0f;
 
-        return clip.length + clipGap;
+        float speed = GetPlaybackSpeedByNodeId(nodeId);
+        speed = Mathf.Max(0.01f, Mathf.Abs(speed));
+
+        return (clip.length / speed) + clipGap;
     }
 }

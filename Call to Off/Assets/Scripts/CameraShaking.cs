@@ -11,8 +11,14 @@ public class CameraShaking : MonoBehaviour
         originalLocalPos = transform.localPosition;
     }
 
-    public void Shake(float duration, float magnitude)
+    public void Shake(float duration, float magnitude, bool sound)
     {
+        if (sound)
+        {
+            SFXManager sfx = FindAnyObjectByType<SFXManager>();
+            sfx.thudSound();
+        }
+
         if (shakeCoroutine != null)
             StopCoroutine(shakeCoroutine);
 

@@ -38,6 +38,15 @@ public class ARSUIController : MonoBehaviour
     [SerializeField] private int afterWaitingNodeId = 312;
     [SerializeField] private float waitingNodeDelay = 5f;
 
+    [SerializeField] private Animator playerAnim;
+    [SerializeField] private SpriteRenderer playerSR;
+    [SerializeField] private Sprite[] clickSprites;
+    [SerializeField] private Sprite[] unclickSprites;
+
+    [SerializeField] private float clickSpriteDuration = 0.25f;
+
+    private Coroutine clickSpriteRoutine;
+
     private Coroutine autoMoveRoutine;
 
     private ARSNodeData currentNode;
@@ -210,6 +219,11 @@ public class ARSUIController : MonoBehaviour
         if (currentNode == null) return;
         if (IsSuccessEndingNode()) return;
         if (IsInputLocked()) return;
+
+        PlayRandomClickSprite();
+
+        SFXManager sfx = FindAnyObjectByType<SFXManager>();
+        sfx.phoneClickSound();
 
         if (currentNode.nodeType == ARSNodeType.NumberInput)
         {
@@ -518,5 +532,37 @@ public class ARSUIController : MonoBehaviour
             autoMoveRoutine = null;
             ShowNode(toNodeId);
         }
+    }
+
+    private void PlayRandomClickSprite()
+    {
+        if (playerSR == null)
+            return;
+
+        if (clickSprites == null || clickSprites.Length == 0)
+            return;
+
+        if (clickSpriteRoutine != null)
+            StopCoroutine(clickSpriteRoutine);
+
+        clickSpriteRoutine = StartCoroutine(CoPlayRandomClickSprite());
+    }
+
+    private IEnumerator CoPlayRandomClickSprite()
+    {
+        playerAnim.enabled = false;
+
+        Sprite clickSprite = clickSprites[Random.Range(0, clickSprites.Length)];
+        playerSR.sprite = clickSprite;
+
+        yield return new WaitForSeconds(clickSpriteDuration);
+
+        if (unclickSprites != null && unclickSprites.Length > 0)
+        {
+            Sprite unclickSprite = unclickSprites[Random.Range(0, unclickSprites.Length)];
+            playerSR.sprite = unclickSprite;
+        }
+
+        clickSpriteRoutine = null;
     }
 }

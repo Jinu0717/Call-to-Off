@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Outro : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class Outro : MonoBehaviour
     private TMP_TypeByAnimationLength typeWriter;
     [SerializeField]
     private TMPSmartWrappedLayout smartLayout;
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip audioClip;
     private int currentIndex = 0;
     private bool isPlaying = false;
     private bool isEnd = false;
@@ -24,6 +29,9 @@ public class Outro : MonoBehaviour
     public void Finish()
     {
         Debug.Log("Finsih");
+
+        audioSource.clip = audioClip;
+        audioSource.Play();
 
         intro.SetActive(false);
         hand.SetActive(false);
@@ -102,5 +110,8 @@ public class Outro : MonoBehaviour
         Debug.Log("[Outro] 모든 대사 출력 완료");
 
         // 여기서 추가 연출 가능 (페이드아웃 등)
+        Invoke(nameof(Loading), 0.5f);
     }
+
+    private void Loading() => SceneManager.LoadScene("Success");
 }

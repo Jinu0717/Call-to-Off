@@ -35,6 +35,12 @@ public class Intro : MonoBehaviour
     private CameraShaking camShake;
     [SerializeField]
     private SpriteRenderer playerSR;
+    [SerializeField]
+    private AudioSource bgm;
+    [SerializeField]
+    private AudioClip mainClip;
+    [SerializeField]
+    private int changeAudio;
     private const string TARGET_SPRITE_NAME = "Player Sit 4";
 
     private int currentIndex = 1;
@@ -67,6 +73,7 @@ public class Intro : MonoBehaviour
         PlayDialogueSmart(dialogues[0]);
         UpdateBarWidth();
         ApplyPeopleSprite(false);
+        StartCoroutine(WalkingSound());
     }
 
     private void Update()
@@ -110,6 +117,12 @@ public class Intro : MonoBehaviour
         playerAnim.SetTrigger("Click");
         StartPlayerMotionCheck();
 
+        if (currentIndex == changeAudio)
+        {
+            bgm.clip = mainClip;
+            bgm.Play();
+        }
+
         PlayDialogueSmart(dialogues[currentIndex]);
         currentIndex++;
     }
@@ -123,6 +136,8 @@ public class Intro : MonoBehaviour
         else if (index ==  4 || index == 8 || index == 15 || index == 17)
         {
             cellPhoneAnim.SetTrigger("Click");
+
+            if (index == 4) { StartCoroutine(AudioSetting()); }
         }
     }
 
@@ -183,7 +198,7 @@ public class Intro : MonoBehaviour
                 ApplyPeopleSprite(true);
 
                 if (camShake != null)
-                    camShake.Shake(0.12f, 0.08f);
+                    camShake.Shake(0.12f, 0.08f, true);
 
                 playerMotionCheckRoutine = null;
                 yield break;
@@ -228,6 +243,28 @@ public class Intro : MonoBehaviour
         else
         {
             typeWriter.Play(text);
+        }
+    }
+
+    private IEnumerator WalkingSound()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            SFXManager sfx = FindAnyObjectByType<SFXManager>();
+            sfx.footstepSound();
+
+            yield return new WaitForSeconds(0.75f);
+        }
+    }
+
+    private IEnumerator AudioSetting()
+    {
+        SFXManager sfx = FindAnyObjectByType<SFXManager>();
+        while (currentIndex <= 8)
+        {
+            sfx.warningSound();
+
+            yield return new WaitForSeconds(1);
         }
     }
 }

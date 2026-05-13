@@ -9,8 +9,8 @@ public class Battery : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private Sprite[] sprites;
 
-    [Header("배터리 종료 시 실행할 Outro")]
-    [SerializeField] private Outro outro;
+    [Header("배터리 종료 시 실행할 Fail")]
+    [SerializeField] private Fail fail;
 
     private bool isFinished = false;
 
@@ -67,13 +67,13 @@ public class Battery : MonoBehaviour
 
         isFinished = true;
 
-        if (outro != null)
+        if (fail != null)
         {
-            outro.Finish();
+            fail.Finish();
         }
         else
         {
-            Debug.LogWarning("[Battery] Outro가 연결되지 않았습니다.");
+            Debug.LogWarning("[Battery] Fail에 연결되지 않았습니다.");
         }
 
         enabled = false;
