@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
+    [SerializeField] private GameObject hand;
     [Header("일시정지 패널")]
     [SerializeField] private GameObject pausePanel;
 
@@ -43,6 +44,9 @@ public class PauseManager : MonoBehaviour
 
         Time.timeScale = 0f;
 
+        if (!hand.activeSelf)
+            Cursor.visible = true;
+
         if (pauseAudio)
             AudioListener.pause = true;
     }
@@ -55,6 +59,7 @@ public class PauseManager : MonoBehaviour
             pausePanel.SetActive(false);
 
         Time.timeScale = 1f;
+        Cursor.visible = false;
 
         if (pauseAudio)
             AudioListener.pause = false;
